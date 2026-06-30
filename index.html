@@ -42,7 +42,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'" />
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" /></noscript>
 
-  <link rel="stylesheet" href="assets/css/style.css?v=33" />
+  <link rel="stylesheet" href="assets/css/style.css?v=34" />
   <link rel="icon" type="image/png" sizes="256x256" href="assets/brand/favicon-256.png" />
   <link rel="apple-touch-icon" href="assets/brand/favicon-256.png" />
 
@@ -126,6 +126,7 @@
       <img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="The Hook — الهوك" decoding="async" width="131" height="24" style="--logo-h:24px" />
     </a>
     <nav class="nav__links" aria-label="Primary">
+      <a href="#hero" data-cursor="hover">Home</a>
       <a href="#services" data-cursor="hover">Services</a>
       <a href="#work" data-cursor="hover">Work</a>
       <a href="#cases" data-cursor="hover">Case Studies</a>
@@ -143,12 +144,13 @@
   <!-- Fullscreen mobile menu -->
   <div class="menu" id="menu" aria-hidden="true">
     <nav class="menu__links" aria-label="Mobile">
-      <a href="#services" data-cursor="hover"><span>01</span>Services</a>
-      <a href="#work" data-cursor="hover"><span>02</span>Work</a>
-      <a href="#cases" data-cursor="hover"><span>03</span>Case Studies</a>
-      <a href="team.html" data-cursor="hover"><span>04</span>Team</a>
-      <a href="#results" data-cursor="hover"><span>05</span>Results</a>
-      <a href="#contact" data-cursor="hover"><span>06</span>Contact</a>
+      <a href="#hero" data-cursor="hover"><span>01</span>Home</a>
+      <a href="#services" data-cursor="hover"><span>02</span>Services</a>
+      <a href="#work" data-cursor="hover"><span>03</span>Work</a>
+      <a href="#cases" data-cursor="hover"><span>04</span>Case Studies</a>
+      <a href="team.html" data-cursor="hover"><span>05</span>Team</a>
+      <a href="#results" data-cursor="hover"><span>06</span>Results</a>
+      <a href="#contact" data-cursor="hover"><span>07</span>Contact</a>
     </nav>
     <div class="menu__foot">
       <a href="mailto:hello@thehookstrategy.com">hello@thehookstrategy.com</a>
@@ -901,11 +903,12 @@
       <header class="section__head">
         <p class="section__eyebrow reveal-up"><span class="idx">13</span> Journal</p>
         <h2 class="section__title reveal-up">Latest thinking.</h2>
+        <a href="journal.html" class="section__link reveal-up" data-cursor="hover">Read the journal <span aria-hidden="true">→</span></a>
       </header>
       <div class="blog__grid">
-        <article class="post reveal-up" data-cursor="hover"><span class="post__cat">AI Search</span><h3>How to get your brand cited by ChatGPT</h3><p>A practical framework for GEO, AEO and AIO in 2026.</p><span class="post__more">Read →</span></article>
-        <article class="post reveal-up" data-cursor="hover"><span class="post__cat">Performance</span><h3>The death of the vanity metric</h3><p>Why we measure pipeline, not impressions.</p><span class="post__more">Read →</span></article>
-        <article class="post reveal-up" data-cursor="hover"><span class="post__cat">Brand</span><h3>Designing a hook that scales</h3><p>The anatomy of an idea that earns attention everywhere.</p><span class="post__more">Read →</span></article>
+        <article class="post reveal-up" data-cursor="hover"><span class="post__cat">AI Search</span><h3>How to get your brand cited by ChatGPT</h3><p>A practical framework for GEO, AEO and AIO in 2026.</p><a class="post__more" href="journal.html" data-cursor="hover">Read →</a></article>
+        <article class="post reveal-up" data-cursor="hover"><span class="post__cat">Performance</span><h3>The death of the vanity metric</h3><p>Why we measure pipeline, not impressions.</p><a class="post__more" href="journal.html" data-cursor="hover">Read →</a></article>
+        <article class="post reveal-up" data-cursor="hover"><span class="post__cat">Brand</span><h3>Designing a hook that scales</h3><p>The anatomy of an idea that earns attention everywhere.</p><a class="post__more" href="journal.html" data-cursor="hover">Read →</a></article>
       </div>
     </section>
 
@@ -989,7 +992,7 @@
       </div>
       <nav class="footer__nav" aria-label="Footer">
         <div><h4>Studio</h4><a href="#services" data-cursor="hover">Services</a><a href="#work" data-cursor="hover">Work</a><a href="#process" data-cursor="hover">Process</a></div>
-        <div><h4>Company</h4><a href="#team" data-cursor="hover">Studio</a><a href="#results" data-cursor="hover">Results</a><a href="#blog" data-cursor="hover">Journal</a></div>
+        <div><h4>Company</h4><a href="#team" data-cursor="hover">Studio</a><a href="#results" data-cursor="hover">Results</a><a href="journal.html" data-cursor="hover">Journal</a></div>
         <div><h4>Connect</h4><a href="https://www.instagram.com/thehookstrategies" target="_blank" rel="noopener" data-cursor="hover">Instagram ↗</a><a href="mailto:hello@thehookstrategy.com" data-cursor="hover">Email</a></div>
       </nav>
     </div>
@@ -1002,6 +1005,6 @@
 
   <script type="module" src="assets/js/hero.js?v=3"></script>
   <script type="module" src="assets/js/team.js?v=3"></script>
-  <script type="module" src="assets/js/main.js?v=15"></script>
+  <script type="module" src="assets/js/main.js?v=16"></script>
 </body>
 </html>

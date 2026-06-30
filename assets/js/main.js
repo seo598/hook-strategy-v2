@@ -608,6 +608,29 @@ if (burger) {
   apply();                                 // start collapsed
 })();
 
+/* ---------- journal: topic filter + inline read toggle ---------- */
+(function journal() {
+  const root = document.querySelector('[data-jr]');
+  if (!root) return;
+  const chips = [...root.querySelectorAll('[data-jr-filter]')];
+  const items = [...root.querySelectorAll('[data-jr-cat]')];
+  chips.forEach((chip) => chip.addEventListener('click', () => {
+    const f = chip.dataset.jrFilter;
+    chips.forEach((c) => { const on = c === chip; c.classList.toggle('is-active', on); c.setAttribute('aria-pressed', String(on)); });
+    items.forEach((it) => it.classList.toggle('is-hidden', !(f === 'all' || it.dataset.jrCat === f)));
+  }));
+  root.querySelectorAll('.post__more').forEach((btn) => {
+    const body = btn.parentElement.querySelector('.post__body');
+    if (!body) return;
+    btn.addEventListener('click', () => {
+      const open = body.hasAttribute('hidden');
+      body.toggleAttribute('hidden', !open);
+      btn.setAttribute('aria-expanded', String(open));
+      btn.textContent = open ? 'Close ✕' : 'Read →';
+    });
+  });
+})();
+
 /* ---------- industries: cursor-follow visual + spotlight ---------- */
 (function industries() {
   const root = document.querySelector('[data-ind]');
