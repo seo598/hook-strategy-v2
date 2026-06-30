@@ -565,6 +565,14 @@ if (burger) {
   const items = [...root.querySelectorAll('.tech__item')];
   const empty = root.querySelector('.tech__empty');
   if (!chips.length || !items.length) return;
+
+  // Counts derive from the DOM, so the stack can be extended just by adding
+  // <li class="tech__item" data-cat="…"> tiles (and a chip for a new discipline).
+  const countEl = document.querySelector('#tech .tech__count [data-count]');
+  if (countEl) countEl.dataset.count = String(items.length);
+  const discEl = document.querySelector('#tech [data-disciplines]');
+  if (discEl) discEl.textContent = String(chips.filter((c) => c.dataset.filter !== 'all').length);
+
   chips.forEach((chip) => chip.addEventListener('click', () => {
     const f = chip.dataset.filter;
     chips.forEach((c) => { const on = c === chip; c.classList.toggle('is-active', on); c.setAttribute('aria-pressed', String(on)); });

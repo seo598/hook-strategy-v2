@@ -715,7 +715,7 @@
       <header class="section__head">
         <p class="section__eyebrow reveal-up"><span class="idx">09</span> Our toolkit</p>
         <h2 class="section__title reveal-up">A modern stack,<br>used with intent.</h2>
-        <p class="tech__count reveal-up"><span data-count="38" data-suffix="">0</span> tools across 8 disciplines — click any to explore.</p>
+        <p class="tech__count reveal-up"><span data-count="38" data-suffix="">0</span> tools across <span data-disciplines>8</span> disciplines — click any to explore.</p>
       </header>
 
       <div class="tech reveal-up" data-tech>
@@ -732,6 +732,11 @@
         </div>
 
         <ul class="tech__grid">
+          <!-- EXTEND: to add a tool, copy one <li> below and set data-cat to a discipline
+               (analytics/ads/seo/crm/design/motion/web/ai — or add a new .tech__filter button
+               above for a new discipline). Use --logo:url('../img/tech/NAME.svg') with the SVG
+               dropped in assets/img/tech/, or <i class="tech__mono" style="--c:#HEX">X</i> for a
+               letter mark. The "N tools across M disciplines" count updates automatically. -->
           <li class="tech__item" data-cat="analytics"><a href="https://marketingplatform.google.com/about/analytics/" target="_blank" rel="noopener noreferrer" data-cursor="hover"><i class="tech__logo" style="--c:#E37400;--logo:url('../img/tech/ga4.svg')"></i><span>GA4</span><b class="tech__ar" aria-hidden="true">↗</b></a></li>
           <li class="tech__item" data-cat="analytics"><a href="https://tagmanager.google.com/" target="_blank" rel="noopener noreferrer" data-cursor="hover"><i class="tech__logo" style="--c:#246FDB;--logo:url('../img/tech/gtm.svg')"></i><span>Google Tag Manager</span><b class="tech__ar" aria-hidden="true">↗</b></a></li>
           <li class="tech__item" data-cat="analytics"><a href="https://lookerstudio.google.com/" target="_blank" rel="noopener noreferrer" data-cursor="hover"><i class="tech__logo" style="--c:#4285F4;--logo:url('../img/tech/looker.svg')"></i><span>Looker Studio</span><b class="tech__ar" aria-hidden="true">↗</b></a></li>
