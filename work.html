@@ -21,10 +21,18 @@
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"/>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'"/>
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"/></noscript>
-  <link rel="stylesheet" href="assets/css/style.css?v=32"/>
+  <link rel="stylesheet" href="assets/css/style.css?v=40"/>
   <link rel="icon" type="image/png" sizes="256x256" href="assets/brand/favicon-256.png"/>
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"CollectionPage","name":"Our Work — Hook Strategy","url":"https://www.thehookstrategy.com/work.html","about":{"@type":"Organization","name":"Hook Strategy"}}
+  </script>
+  <!-- hook-perf-v1 : perf resource hints + instant nav -->
+  <link rel="modulepreload" href="https://esm.sh/gsap@3.12.5" crossorigin fetchpriority="low" />
+  <link rel="modulepreload" href="https://esm.sh/gsap@3.12.5/ScrollTrigger" crossorigin fetchpriority="low" />
+  <link rel="modulepreload" href="https://esm.sh/lenis@1.1.14" crossorigin fetchpriority="low" />
+  <link rel="modulepreload" href="assets/js/main.js?v=17" fetchpriority="low" />
+  <script type="speculationrules">
+  {"prefetch":[{"source":"document","eagerness":"moderate","where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"[target=_blank]"}},{"not":{"selector_matches":"[rel~=external]"}}]}}]}
   </script>
 </head>
 <body>
@@ -32,7 +40,7 @@
   <div class="cursor" id="cursor" aria-hidden="true"><div class="cursor__dot"></div><div class="cursor__ring"></div><span class="cursor__label"></span></div>
   <div class="scroll-progress" aria-hidden="true"><span id="scroll-fill"></span></div>
   <header class="nav" id="nav">
-    <a class="nav__brand" href="index.html" aria-label="The Hook — home" data-cursor="hover"><img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" style="--logo-h:24px"/></a>
+    <a class="nav__brand" href="index.html" aria-label="The Hook — home" data-cursor="hover"><picture><source type="image/webp" srcset="assets/brand/logo-wordmark-neon.webp"><img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" style="--logo-h:24px"/></picture></a>
     <nav class="nav__links" aria-label="Primary">
       <a href="index.html" data-cursor="hover">Home</a>
       <a href="services.html" data-cursor="hover">Services</a>
@@ -82,75 +90,75 @@
       </div>
       <div class="work__grid">
 <article class="work-card" data-cursor="view" data-tilt data-tags="social">
-          <div class="work-card__media"><img src="assets/img/clients/multiform.jpg" alt="Multiform" width="800" height="500" loading="lazy" decoding="async" /></div>
+          <div class="work-card__media"><picture><source type="image/avif" srcset="assets/img/clients/multiform.avif"><source type="image/webp" srcset="assets/img/clients/multiform.webp"><img src="assets/img/clients/multiform.jpg" alt="Multiform" width="800" height="500" loading="lazy" decoding="async" /></picture></div>
           <div class="work-card__meta"><span>Social &middot; Content</span><h3>Multiform</h3><p>500K+ views on a single reel</p></div><a class="work-card__open" href="case-multiform.html" aria-label="View the Multiform case study" data-cursor="view"></a>
         </article>
         <article class="work-card" data-cursor="view" data-tilt data-tags="social performance">
-          <div class="work-card__media"><img src="assets/img/clients/amazingbahrain.jpg" alt="Amazing Bahrain" width="800" height="500" loading="lazy" decoding="async" /><span class="work-card__logo"><img src="assets/img/clients/logos/amazing.png" alt="Amazing Bahrain logo" loading="lazy" decoding="async"/></span></div>
+          <div class="work-card__media"><picture><source type="image/avif" srcset="assets/img/clients/amazingbahrain.avif"><source type="image/webp" srcset="assets/img/clients/amazingbahrain.webp"><img src="assets/img/clients/amazingbahrain.jpg" alt="Amazing Bahrain" width="800" height="500" loading="lazy" decoding="async" /></picture><span class="work-card__logo"><picture><source type="image/webp" srcset="assets/img/clients/logos/amazing.webp"><img src="assets/img/clients/logos/amazing.png" alt="Amazing Bahrain logo" loading="lazy" decoding="async"/></picture></span></div>
           <div class="work-card__meta"><span>Campaign &middot; Social</span><h3>Amazing Bahrain</h3><p>260K views in two weeks</p></div><a class="work-card__open" href="case-amazingbahrain.html" aria-label="View the Amazing Bahrain case study" data-cursor="view"></a>
         </article>
         <article class="work-card" data-cursor="view" data-tilt data-tags="web strategy">
-          <div class="work-card__media"><img src="assets/img/clients/startupnest.jpg" alt="Startup Nest" width="800" height="500" loading="lazy" decoding="async" /><span class="work-card__logo"><img src="assets/img/clients/logos/startupnest.png" alt="Startup Nest logo" loading="lazy" decoding="async"/></span></div>
+          <div class="work-card__media"><picture><source type="image/avif" srcset="assets/img/clients/startupnest.avif"><source type="image/webp" srcset="assets/img/clients/startupnest.webp"><img src="assets/img/clients/startupnest.jpg" alt="Startup Nest" width="800" height="500" loading="lazy" decoding="async" /></picture><span class="work-card__logo"><picture><source type="image/avif" srcset="assets/img/clients/logos/startupnest.avif"><source type="image/webp" srcset="assets/img/clients/logos/startupnest.webp"><img src="assets/img/clients/logos/startupnest.png" alt="Startup Nest logo" loading="lazy" decoding="async"/></picture></span></div>
           <div class="work-card__meta"><span>Web &middot; Brand</span><h3>Startup Nest</h3><p>A platform built to be taken seriously</p></div><a class="work-card__open" href="case-startupnest.html" aria-label="View the Startup Nest case study" data-cursor="view"></a>
         </article>
         <article class="work-card" data-cursor="view" data-tilt data-tags="strategy social">
-          <div class="work-card__media"><img src="assets/img/clients/businesshub.jpg" alt="Business Hub KSA" width="800" height="500" loading="lazy" decoding="async" /></div>
+          <div class="work-card__media"><picture><source type="image/avif" srcset="assets/img/clients/businesshub.avif"><source type="image/webp" srcset="assets/img/clients/businesshub.webp"><img src="assets/img/clients/businesshub.jpg" alt="Business Hub KSA" width="800" height="500" loading="lazy" decoding="async" /></picture></div>
           <div class="work-card__meta"><span>Brand &middot; Space &middot; Social</span><h3>Business Hub KSA</h3><p>A brand worth walking into</p></div><a class="work-card__open" href="case-businesshub.html" aria-label="View the Business Hub KSA case study" data-cursor="view"></a>
         </article>
         <article class="work-card" data-cursor="view" data-tilt data-tags="strategy">
-          <div class="work-card__media"><img src="assets/img/clients/deargold.jpg" alt="Dear Gold" width="800" height="500" loading="lazy" decoding="async" /></div>
+          <div class="work-card__media"><picture><source type="image/avif" srcset="assets/img/clients/deargold.avif"><source type="image/webp" srcset="assets/img/clients/deargold.webp"><img src="assets/img/clients/deargold.jpg" alt="Dear Gold" width="800" height="500" loading="lazy" decoding="async" /></picture></div>
           <div class="work-card__meta"><span>Branding</span><h3>Dear Gold</h3><p>A brand that belongs in high-end retail</p></div><a class="work-card__open" href="case-deargold.html" aria-label="View the Dear Gold case study" data-cursor="view"></a>
         </article>
         <article class="work-card" data-cursor="view" data-tilt data-tags="strategy">
-          <div class="work-card__media"><img src="assets/img/clients/colombiancoffee.jpg" alt="Colombian Coffee" width="800" height="500" loading="lazy" decoding="async" /></div>
+          <div class="work-card__media"><picture><source type="image/avif" srcset="assets/img/clients/colombiancoffee.avif"><source type="image/webp" srcset="assets/img/clients/colombiancoffee.webp"><img src="assets/img/clients/colombiancoffee.jpg" alt="Colombian Coffee" width="800" height="500" loading="lazy" decoding="async" /></picture></div>
           <div class="work-card__meta"><span>Research &middot; Strategy</span><h3>Colombian Coffee</h3><p>A clear path to market</p></div><a class="work-card__open" href="case-colombian.html" aria-label="View the Colombian Coffee case study" data-cursor="view"></a>
         </article>
         <article class="work-card" data-cursor="view" data-tilt data-tags="web strategy">
-          <div class="work-card__media work-card__media--logo" data-grad="1"><img class="work-card__loghero" src="assets/img/clients/logos/fahdan.png" alt="Fahdan logo" loading="lazy" decoding="async"/></div>
+          <div class="work-card__media work-card__media--logo" data-grad="1"><picture><source type="image/webp" srcset="assets/img/clients/logos/fahdan.webp"><img class="work-card__loghero" src="assets/img/clients/logos/fahdan.png" alt="Fahdan logo" loading="lazy" decoding="async"/></picture></div>
           <div class="work-card__meta"><span>Brand &middot; Web &middot; SEO</span><h3>Fahdan</h3><p>Business setup &amp; PRO services across Bahrain</p></div><a class="work-card__open" href="case-fahdan.html" aria-label="View the Fahdan case study" data-cursor="view"></a>
         </article>
         <article class="work-card" data-cursor="view" data-tilt data-tags="strategy social">
-          <div class="work-card__media work-card__media--logo" data-grad="2"><img class="work-card__loghero" src="assets/img/clients/logos/fixit.png" alt="Fix It logo" loading="lazy" decoding="async"/></div>
+          <div class="work-card__media work-card__media--logo" data-grad="2"><picture><source type="image/webp" srcset="assets/img/clients/logos/fixit.webp"><img class="work-card__loghero" src="assets/img/clients/logos/fixit.png" alt="Fix It logo" loading="lazy" decoding="async"/></picture></div>
           <div class="work-card__meta"><span>Brand &middot; Social</span><h3>Fix It</h3><p>Technical support &amp; facility maintenance</p></div><a class="work-card__open" href="case-fixit.html" aria-label="View the Fix It case study" data-cursor="view"></a>
         </article>
         <article class="work-card" data-cursor="view" data-tilt data-tags="web strategy">
-          <div class="work-card__media work-card__media--logo" data-grad="3"><img class="work-card__loghero" src="assets/img/clients/logos/propertyhub.png" alt="Property Hub logo" loading="lazy" decoding="async"/></div>
+          <div class="work-card__media work-card__media--logo" data-grad="3"><picture><source type="image/webp" srcset="assets/img/clients/logos/propertyhub.webp"><img class="work-card__loghero" src="assets/img/clients/logos/propertyhub.png" alt="Property Hub logo" loading="lazy" decoding="async"/></picture></div>
           <div class="work-card__meta"><span>Brand &middot; Web</span><h3>Property Hub</h3><p>Property management &amp; rental</p></div><a class="work-card__open" href="case-propertyhub.html" aria-label="View the Property Hub case study" data-cursor="view"></a>
         </article>
         <article class="work-card" data-cursor="view" data-tilt data-tags="web strategy">
-          <div class="work-card__media work-card__media--logo" data-grad="1"><img class="work-card__loghero" src="assets/img/clients/logos/arboura.png" alt="Arboura logo" loading="lazy" decoding="async"/></div>
+          <div class="work-card__media work-card__media--logo" data-grad="1"><picture><source type="image/avif" srcset="assets/img/clients/logos/arboura.avif"><source type="image/webp" srcset="assets/img/clients/logos/arboura.webp"><img class="work-card__loghero" src="assets/img/clients/logos/arboura.png" alt="Arboura logo" loading="lazy" decoding="async"/></picture></div>
           <div class="work-card__meta"><span>Brand &middot; Web</span><h3>Arboura</h3><p>Digital transformation &amp; consulting</p></div><a class="work-card__open" href="case-arboura.html" aria-label="View the Arboura case study" data-cursor="view"></a>
         </article>
         <article class="work-card" data-cursor="view" data-tilt data-tags="strategy web">
-          <div class="work-card__media work-card__media--logo" data-grad="4"><img class="work-card__loghero" src="assets/img/clients/logos/keystone.png" alt="Keystone Auditing logo" loading="lazy" decoding="async"/></div>
+          <div class="work-card__media work-card__media--logo" data-grad="4"><picture><source type="image/webp" srcset="assets/img/clients/logos/keystone.webp"><img class="work-card__loghero" src="assets/img/clients/logos/keystone.png" alt="Keystone Auditing logo" loading="lazy" decoding="async"/></picture></div>
           <div class="work-card__meta"><span>Brand &middot; Web</span><h3>Keystone Auditing</h3><p>Audit &amp; assurance services</p></div><a class="work-card__open" href="case-keystone.html" aria-label="View the Keystone Auditing case study" data-cursor="view"></a>
         </article>
         <article class="work-card" data-cursor="view" data-tilt data-tags="strategy">
-          <div class="work-card__media work-card__media--logo" data-grad="2"><img class="work-card__loghero" src="assets/img/clients/logos/dcme.png" alt="DC Middle East logo" loading="lazy" decoding="async"/></div>
+          <div class="work-card__media work-card__media--logo" data-grad="2"><picture><source type="image/webp" srcset="assets/img/clients/logos/dcme.webp"><img class="work-card__loghero" src="assets/img/clients/logos/dcme.png" alt="DC Middle East logo" loading="lazy" decoding="async"/></picture></div>
           <div class="work-card__meta"><span>Brand &middot; Social</span><h3>DC Middle East</h3><p>Accounting &amp; tax advisory</p></div><a class="work-card__open" href="case-dcme.html" aria-label="View the DC Middle East case study" data-cursor="view"></a>
         </article>
         <article class="work-card" data-cursor="view" data-tilt data-tags="web strategy">
-          <div class="work-card__media work-card__media--logo" data-grad="3"><img class="work-card__loghero" src="assets/img/clients/logos/energtech.png" alt="EnergTech logo" loading="lazy" decoding="async"/></div>
+          <div class="work-card__media work-card__media--logo" data-grad="3"><picture><source type="image/webp" srcset="assets/img/clients/logos/energtech.webp"><img class="work-card__loghero" src="assets/img/clients/logos/energtech.png" alt="EnergTech logo" loading="lazy" decoding="async"/></picture></div>
           <div class="work-card__meta"><span>Brand &middot; Web</span><h3>EnergTech</h3><p>Digital solutions for oil &amp; gas</p></div><a class="work-card__open" href="case-energtech.html" aria-label="View the EnergTech case study" data-cursor="view"></a>
         </article>
         <article class="work-card" data-cursor="view" data-tilt data-tags="strategy web">
-          <div class="work-card__media work-card__media--logo" data-grad="1"><img class="work-card__loghero" src="assets/img/clients/logos/fic.png" alt="Focus In Consultancy logo" loading="lazy" decoding="async"/></div>
+          <div class="work-card__media work-card__media--logo" data-grad="1"><picture><source type="image/avif" srcset="assets/img/clients/logos/fic.avif"><source type="image/webp" srcset="assets/img/clients/logos/fic.webp"><img class="work-card__loghero" src="assets/img/clients/logos/fic.png" alt="Focus In Consultancy logo" loading="lazy" decoding="async"/></picture></div>
           <div class="work-card__meta"><span>Brand &middot; Web</span><h3>Focus In Consultancy</h3><p>Management consultancy</p></div><a class="work-card__open" href="case-fic.html" aria-label="View the Focus In Consultancy case study" data-cursor="view"></a>
         </article>
         <article class="work-card" data-cursor="view" data-tilt data-tags="web strategy">
-          <div class="work-card__media work-card__media--logo" data-grad="2"><img class="work-card__loghero" src="assets/img/clients/logos/sahalat.png" alt="Sahalat logo" loading="lazy" decoding="async"/></div>
+          <div class="work-card__media work-card__media--logo" data-grad="2"><picture><source type="image/webp" srcset="assets/img/clients/logos/sahalat.webp"><img class="work-card__loghero" src="assets/img/clients/logos/sahalat.png" alt="Sahalat logo" loading="lazy" decoding="async"/></picture></div>
           <div class="work-card__meta"><span>Brand &middot; Web</span><h3>Sahalat</h3><p>Trade facilitation &middot; KSA &amp; Bahrain</p></div><a class="work-card__open" href="case-sahalat.html" aria-label="View the Sahalat case study" data-cursor="view"></a>
         </article>
         <article class="work-card" data-cursor="view" data-tilt data-tags="social strategy">
-          <div class="work-card__media work-card__media--logo" data-grad="3"><img class="work-card__loghero" src="assets/img/clients/logos/thetreat.png" alt="The Treat logo" loading="lazy" decoding="async"/></div>
+          <div class="work-card__media work-card__media--logo" data-grad="3"><picture><source type="image/webp" srcset="assets/img/clients/logos/thetreat.webp"><img class="work-card__loghero" src="assets/img/clients/logos/thetreat.png" alt="The Treat logo" loading="lazy" decoding="async"/></picture></div>
           <div class="work-card__meta"><span>Brand &middot; Social</span><h3>The Treat</h3><p>Restaurant &amp; café concept</p></div><a class="work-card__open" href="case-thetreat.html" aria-label="View the The Treat case study" data-cursor="view"></a>
         </article>
         <article class="work-card" data-cursor="view" data-tilt data-tags="social strategy">
-          <div class="work-card__media work-card__media--logo" data-grad="4"><img class="work-card__loghero" src="assets/img/clients/logos/nourishers.png" alt="The Nourishers logo" loading="lazy" decoding="async"/></div>
+          <div class="work-card__media work-card__media--logo" data-grad="4"><picture><source type="image/avif" srcset="assets/img/clients/logos/nourishers.avif"><source type="image/webp" srcset="assets/img/clients/logos/nourishers.webp"><img class="work-card__loghero" src="assets/img/clients/logos/nourishers.png" alt="The Nourishers logo" loading="lazy" decoding="async"/></picture></div>
           <div class="work-card__meta"><span>Brand &middot; Social</span><h3>The Nourishers</h3><p>Wellness &amp; nutrition platform</p></div><a class="work-card__open" href="case-nourishers.html" aria-label="View the The Nourishers case study" data-cursor="view"></a>
         </article>
         <article class="work-card" data-cursor="view" data-tilt data-tags="web strategy">
-          <div class="work-card__media work-card__media--logo" data-grad="1"><img class="work-card__loghero" src="assets/img/clients/logos/makkan.png" alt="Makkan logo" loading="lazy" decoding="async"/></div>
+          <div class="work-card__media work-card__media--logo" data-grad="1"><picture><source type="image/webp" srcset="assets/img/clients/logos/makkan.webp"><img class="work-card__loghero" src="assets/img/clients/logos/makkan.png" alt="Makkan logo" loading="lazy" decoding="async"/></picture></div>
           <div class="work-card__meta"><span>Brand &middot; Web</span><h3>Makkan</h3><p>App &amp; platform identity</p></div><a class="work-card__open" href="case-makkan.html" aria-label="View the Makkan case study" data-cursor="view"></a>
         </article>
       </div>
@@ -163,7 +171,7 @@
   <footer class="footer" aria-label="Footer">
     <div class="footer__top">
       <div class="footer__brand">
-        <img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" style="--logo-h:30px"/>
+        <picture><source type="image/webp" srcset="assets/brand/logo-wordmark-neon.webp"><img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" style="--logo-h:30px"/></picture>
         <div class="footer__word">The Hook Hub — <strong>Strategy &amp; Design</strong></div>
         <p>Where great ideas take bait. — Bahrain &middot; KSA</p>
       </div>
@@ -176,6 +184,6 @@
     <div class="footer__bottom"><span>&copy; <span id="year"></span> Hook Strategy (The Hook). All rights reserved.</span><span class="footer__made">Crafted in Bahrain &middot; where great ideas take bait.</span></div>
     <div class="footer__big" aria-hidden="true">HOOK</div>
   </footer>
-  <script type="module" src="assets/js/main.js?v=14"></script>
+  <script type="module" src="assets/js/main.js?v=17"></script>
 </body>
 </html>

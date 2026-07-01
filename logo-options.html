@@ -15,7 +15,14 @@
   .lab b{color:#C8ED4A;font-size:13px}
   .lab span{display:block;color:#9aa394;font-size:12px;margin-top:3px;line-height:1.4}
   .n{display:inline-block;width:22px;height:22px;border-radius:50%;background:#C8ED4A;color:#0C140F;text-align:center;line-height:22px;font-weight:700;font-size:12px;margin-right:8px}
-</style></head><body>
+</style>  <!-- hook-perf-v1 : perf resource hints + instant nav -->
+  <link rel="modulepreload" href="https://esm.sh/gsap@3.12.5" crossorigin fetchpriority="low" />
+  <link rel="modulepreload" href="https://esm.sh/gsap@3.12.5/ScrollTrigger" crossorigin fetchpriority="low" />
+  <link rel="modulepreload" href="https://esm.sh/lenis@1.1.14" crossorigin fetchpriority="low" />
+  <script type="speculationrules">
+  {"prefetch":[{"source":"document","eagerness":"moderate","where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"[target=_blank]"}},{"not":{"selector_matches":"[rel~=external]"}}]}}]}
+  </script>
+</head><body>
 <h1>Hook — 8 logo directions (dark / paper)</h1>
 <div class="grid" id="g"></div>
 <script>

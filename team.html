@@ -21,7 +21,7 @@
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'" />
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" /></noscript>
-  <link rel="stylesheet" href="assets/css/style.css?v=61" />
+  <link rel="stylesheet" href="assets/css/style.css?v=40" />
   <link rel="icon" type="image/png" sizes="256x256" href="assets/brand/favicon-256.png" />
 
   <!-- Team / Organization entity data -->
@@ -45,6 +45,14 @@
     ]
   }
   </script>
+  <!-- hook-perf-v1 : perf resource hints + instant nav -->
+  <link rel="modulepreload" href="https://esm.sh/gsap@3.12.5" crossorigin fetchpriority="low" />
+  <link rel="modulepreload" href="https://esm.sh/gsap@3.12.5/ScrollTrigger" crossorigin fetchpriority="low" />
+  <link rel="modulepreload" href="https://esm.sh/lenis@1.1.14" crossorigin fetchpriority="low" />
+  <link rel="modulepreload" href="assets/js/main.js?v=17" fetchpriority="low" />
+  <script type="speculationrules">
+  {"prefetch":[{"source":"document","eagerness":"moderate","where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"[target=_blank]"}},{"not":{"selector_matches":"[rel~=external]"}}]}}]}
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -52,7 +60,7 @@
   <div class="scroll-progress" aria-hidden="true"><span id="scroll-fill"></span></div>
 
   <header class="nav" id="nav">
-    <a class="nav__brand" href="index.html" aria-label="The Hook — home" data-cursor="hover"><img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" style="--logo-h:24px" /></a>
+    <a class="nav__brand" href="index.html" aria-label="The Hook — home" data-cursor="hover"><picture><source type="image/webp" srcset="assets/brand/logo-wordmark-neon.webp"><img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" style="--logo-h:24px" /></picture></a>
     <nav class="nav__links" aria-label="Primary">
       <a href="index.html" data-cursor="hover">Home</a>
       <a href="services.html" data-cursor="hover">Services</a>
@@ -90,14 +98,14 @@
 
         <div class="tm-avatars reveal-up">
           <div class="tm-avatars__stack" aria-hidden="true">
-            <span class="tm-av" style="--i:0"><img src="assets/img/team/avatar-toon-nizar.jpg?v=6" alt="" width="480" height="480" loading="lazy" decoding="async" /><b class="tm-av__name">Nizar</b></span>
-            <span class="tm-av" style="--i:1"><img src="assets/img/team/avatar-toon-vineet.jpg?v=6" alt="" width="480" height="480" loading="lazy" decoding="async" /><b class="tm-av__name">Vineet</b></span>
-            <span class="tm-av" style="--i:2"><img src="assets/img/team/avatar-toon-swalih.jpg?v=6" alt="" width="480" height="480" loading="lazy" decoding="async" /><b class="tm-av__name">Swalih</b></span>
-            <span class="tm-av" style="--i:3"><img src="assets/img/team/avatar-toon-vaishnavi.jpg?v=6" alt="" width="480" height="480" loading="lazy" decoding="async" /><b class="tm-av__name">Vaishnavi</b></span>
-            <span class="tm-av" style="--i:4"><img src="assets/img/team/avatar-toon-ebrahim.jpg?v=6" alt="" width="480" height="480" loading="lazy" decoding="async" /><b class="tm-av__name">Ebrahim</b></span>
-            <span class="tm-av" style="--i:5"><img src="assets/img/team/avatar-toon-hiba.jpg?v=6" alt="" width="480" height="480" loading="lazy" decoding="async" /><b class="tm-av__name">Hiba</b></span>
-            <span class="tm-av" style="--i:6"><img src="assets/img/team/avatar-toon-deemah.jpg?v=6" alt="" width="480" height="480" loading="lazy" decoding="async" /><b class="tm-av__name">Deemah</b></span>
-            <span class="tm-av" style="--i:7"><img src="assets/img/team/avatar-toon-zainab.jpg?v=6" alt="" width="480" height="480" loading="lazy" decoding="async" /><b class="tm-av__name">Zainab</b></span>
+            <span class="tm-av" style="--i:0"><img src="assets/img/team/avatar-toon-nizar.webp?v=6" alt="" width="480" height="480" loading="lazy" decoding="async" /><b class="tm-av__name">Nizar</b></span>
+            <span class="tm-av" style="--i:1"><img src="assets/img/team/avatar-toon-vineet.webp?v=6" alt="" width="480" height="480" loading="lazy" decoding="async" /><b class="tm-av__name">Vineet</b></span>
+            <span class="tm-av" style="--i:2"><img src="assets/img/team/avatar-toon-swalih.webp?v=6" alt="" width="480" height="480" loading="lazy" decoding="async" /><b class="tm-av__name">Swalih</b></span>
+            <span class="tm-av" style="--i:3"><img src="assets/img/team/avatar-toon-vaishnavi.webp?v=6" alt="" width="480" height="480" loading="lazy" decoding="async" /><b class="tm-av__name">Vaishnavi</b></span>
+            <span class="tm-av" style="--i:4"><img src="assets/img/team/avatar-toon-ebrahim.webp?v=6" alt="" width="480" height="480" loading="lazy" decoding="async" /><b class="tm-av__name">Ebrahim</b></span>
+            <span class="tm-av" style="--i:5"><img src="assets/img/team/avatar-toon-hiba.webp?v=6" alt="" width="480" height="480" loading="lazy" decoding="async" /><b class="tm-av__name">Hiba</b></span>
+            <span class="tm-av" style="--i:6"><img src="assets/img/team/avatar-toon-deemah.webp?v=6" alt="" width="480" height="480" loading="lazy" decoding="async" /><b class="tm-av__name">Deemah</b></span>
+            <span class="tm-av" style="--i:7"><img src="assets/img/team/avatar-toon-zainab.webp?v=6" alt="" width="480" height="480" loading="lazy" decoding="async" /><b class="tm-av__name">Zainab</b></span>
           </div>
           <p class="tm-avatars__label"><span class="tm-avatars__dot"></span> 8 people behind every project</p>
         </div>
@@ -108,8 +116,8 @@
       <article class="tm-card reveal-up" data-cursor="hover">
         <div class="tm-float"><div class="tm-photo" data-grad="1">
           <div class="tm-flip">
-            <div class="tm-face tm-face--front"><img src="assets/img/team/vineet.jpg?v=6" alt="Vineet — Head of Strategy at Hook Strategy" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></div>
-            <div class="tm-face tm-face--back"><img src="assets/img/team/vineet-photo.jpg?v=6" alt="Vineet" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></div>
+            <div class="tm-face tm-face--front"><picture><source type="image/avif" srcset="assets/img/team/vineet.avif?v=6"><source type="image/webp" srcset="assets/img/team/vineet.webp?v=6"><img src="assets/img/team/vineet.jpg?v=6" alt="Vineet — Head of Strategy at Hook Strategy" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></picture></div>
+            <div class="tm-face tm-face--back"><picture><source type="image/avif" srcset="assets/img/team/vineet-photo.avif?v=6"><source type="image/webp" srcset="assets/img/team/vineet-photo.webp?v=6"><img src="assets/img/team/vineet-photo.jpg?v=6" alt="Vineet" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></picture></div>
           </div>
         </div></div>
         <h3 class="tm-name">Vineet</h3><p class="tm-role">Head of Strategy</p>
@@ -117,8 +125,8 @@
       <article class="tm-card reveal-up" data-cursor="hover">
         <div class="tm-float"><div class="tm-photo" data-grad="3">
           <div class="tm-flip">
-            <div class="tm-face tm-face--front"><img src="assets/img/team/nizar.jpg?v=6" alt="Nizar — Founder &amp; CEO at Hook Strategy" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></div>
-            <div class="tm-face tm-face--back"><img src="assets/img/team/nizar-photo.jpg?v=6" alt="Nizar" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></div>
+            <div class="tm-face tm-face--front"><picture><source type="image/avif" srcset="assets/img/team/nizar.avif?v=6"><source type="image/webp" srcset="assets/img/team/nizar.webp?v=6"><img src="assets/img/team/nizar.jpg?v=6" alt="Nizar — Founder &amp; CEO at Hook Strategy" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></picture></div>
+            <div class="tm-face tm-face--back"><picture><source type="image/avif" srcset="assets/img/team/nizar-photo.avif?v=6"><source type="image/webp" srcset="assets/img/team/nizar-photo.webp?v=6"><img src="assets/img/team/nizar-photo.jpg?v=6" alt="Nizar" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></picture></div>
           </div>
         </div></div>
         <h3 class="tm-name">Nizar</h3><p class="tm-role">Founder &amp; CEO</p>
@@ -126,8 +134,8 @@
       <article class="tm-card reveal-up" data-cursor="hover">
         <div class="tm-float"><div class="tm-photo" data-grad="2">
           <div class="tm-flip">
-            <div class="tm-face tm-face--front"><img src="assets/img/team/swalih.jpg?v=6" alt="Swalih — Graphic Designer at Hook Strategy" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></div>
-            <div class="tm-face tm-face--back"><img src="assets/img/team/swalih-photo.jpg?v=6" alt="Swalih" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></div>
+            <div class="tm-face tm-face--front"><picture><source type="image/avif" srcset="assets/img/team/swalih.avif?v=6"><source type="image/webp" srcset="assets/img/team/swalih.webp?v=6"><img src="assets/img/team/swalih.jpg?v=6" alt="Swalih — Graphic Designer at Hook Strategy" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></picture></div>
+            <div class="tm-face tm-face--back"><picture><source type="image/avif" srcset="assets/img/team/swalih-photo.avif?v=6"><source type="image/webp" srcset="assets/img/team/swalih-photo.webp?v=6"><img src="assets/img/team/swalih-photo.jpg?v=6" alt="Swalih" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></picture></div>
           </div>
         </div></div>
         <h3 class="tm-name">Swalih</h3><p class="tm-role">Graphic Designer</p>
@@ -135,8 +143,8 @@
       <article class="tm-card reveal-up" data-cursor="hover">
         <div class="tm-float"><div class="tm-photo" data-grad="4">
           <div class="tm-flip">
-            <div class="tm-face tm-face--front"><img src="assets/img/team/vaishnavi.jpg?v=6" alt="Vaishnavi — Graphic Designer at Hook Strategy" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></div>
-            <div class="tm-face tm-face--back"><img src="assets/img/team/vaishnavi-photo.jpg?v=6" alt="Vaishnavi" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></div>
+            <div class="tm-face tm-face--front"><picture><source type="image/avif" srcset="assets/img/team/vaishnavi.avif?v=6"><source type="image/webp" srcset="assets/img/team/vaishnavi.webp?v=6"><img src="assets/img/team/vaishnavi.jpg?v=6" alt="Vaishnavi — Graphic Designer at Hook Strategy" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></picture></div>
+            <div class="tm-face tm-face--back"><picture><source type="image/avif" srcset="assets/img/team/vaishnavi-photo.avif?v=6"><source type="image/webp" srcset="assets/img/team/vaishnavi-photo.webp?v=6"><img src="assets/img/team/vaishnavi-photo.jpg?v=6" alt="Vaishnavi" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></picture></div>
           </div>
         </div></div>
         <h3 class="tm-name">Vaishnavi</h3><p class="tm-role">Graphic Designer</p>
@@ -144,8 +152,8 @@
       <article class="tm-card reveal-up" data-cursor="hover">
         <div class="tm-float"><div class="tm-photo" data-grad="1">
           <div class="tm-flip">
-            <div class="tm-face tm-face--front"><img src="assets/img/team/ebrahim.jpg?v=6" alt="Ebrahim — Web &amp; AI Engineer at Hook Strategy" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></div>
-            <div class="tm-face tm-face--back"><img src="assets/img/team/ebrahim-photo.jpg?v=6" alt="Ebrahim" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></div>
+            <div class="tm-face tm-face--front"><picture><source type="image/avif" srcset="assets/img/team/ebrahim.avif?v=6"><source type="image/webp" srcset="assets/img/team/ebrahim.webp?v=6"><img src="assets/img/team/ebrahim.jpg?v=6" alt="Ebrahim — Web &amp; AI Engineer at Hook Strategy" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></picture></div>
+            <div class="tm-face tm-face--back"><picture><source type="image/avif" srcset="assets/img/team/ebrahim-photo.avif?v=6"><source type="image/webp" srcset="assets/img/team/ebrahim-photo.webp?v=6"><img src="assets/img/team/ebrahim-photo.jpg?v=6" alt="Ebrahim" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></picture></div>
           </div>
         </div></div>
         <h3 class="tm-name">Ebrahim</h3><p class="tm-role">Web &amp; AI Engineer</p>
@@ -153,8 +161,8 @@
       <article class="tm-card reveal-up" data-cursor="hover">
         <div class="tm-float"><div class="tm-photo" data-grad="2">
           <div class="tm-flip">
-            <div class="tm-face tm-face--front"><img src="assets/img/team/hiba.jpg?v=6" alt="Hiba — Operations Manager at Hook Strategy" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></div>
-            <div class="tm-face tm-face--back"><img src="assets/img/team/hiba-photo.jpg?v=6" alt="Hiba" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></div>
+            <div class="tm-face tm-face--front"><picture><source type="image/avif" srcset="assets/img/team/hiba.avif?v=6"><source type="image/webp" srcset="assets/img/team/hiba.webp?v=6"><img src="assets/img/team/hiba.jpg?v=6" alt="Hiba — Operations Manager at Hook Strategy" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></picture></div>
+            <div class="tm-face tm-face--back"><picture><source type="image/avif" srcset="assets/img/team/hiba-photo.avif?v=6"><source type="image/webp" srcset="assets/img/team/hiba-photo.webp?v=6"><img src="assets/img/team/hiba-photo.jpg?v=6" alt="Hiba" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></picture></div>
           </div>
         </div></div>
         <h3 class="tm-name">Hiba</h3><p class="tm-role">Operations Manager</p>
@@ -162,8 +170,8 @@
       <article class="tm-card reveal-up" data-cursor="hover">
         <div class="tm-float"><div class="tm-photo" data-grad="4">
           <div class="tm-flip">
-            <div class="tm-face tm-face--front"><img src="assets/img/team/deemah.jpg?v=6" alt="Deemah — Business Development at Hook Strategy" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></div>
-            <div class="tm-face tm-face--back"><img src="assets/img/team/deemah-photo.jpg?v=6" alt="Deemah" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></div>
+            <div class="tm-face tm-face--front"><picture><source type="image/avif" srcset="assets/img/team/deemah.avif?v=6"><source type="image/webp" srcset="assets/img/team/deemah.webp?v=6"><img src="assets/img/team/deemah.jpg?v=6" alt="Deemah — Business Development at Hook Strategy" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></picture></div>
+            <div class="tm-face tm-face--back"><picture><source type="image/avif" srcset="assets/img/team/deemah-photo.avif?v=6"><source type="image/webp" srcset="assets/img/team/deemah-photo.webp?v=6"><img src="assets/img/team/deemah-photo.jpg?v=6" alt="Deemah" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></picture></div>
           </div>
         </div></div>
         <h3 class="tm-name">Deemah</h3><p class="tm-role">Business Development</p>
@@ -171,8 +179,8 @@
       <article class="tm-card reveal-up" data-cursor="hover">
         <div class="tm-float"><div class="tm-photo" data-grad="3">
           <div class="tm-flip">
-            <div class="tm-face tm-face--front"><img src="assets/img/team/zainab.jpg?v=6" alt="Zainab — Graphic Designer at Hook Strategy" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></div>
-            <div class="tm-face tm-face--back"><img src="assets/img/team/zainab-photo.jpg?v=6" alt="Zainab" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></div>
+            <div class="tm-face tm-face--front"><picture><source type="image/avif" srcset="assets/img/team/zainab.avif?v=6"><source type="image/webp" srcset="assets/img/team/zainab.webp?v=6"><img src="assets/img/team/zainab.jpg?v=6" alt="Zainab — Graphic Designer at Hook Strategy" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></picture></div>
+            <div class="tm-face tm-face--back"><picture><source type="image/avif" srcset="assets/img/team/zainab-photo.avif?v=6"><source type="image/webp" srcset="assets/img/team/zainab-photo.webp?v=6"><img src="assets/img/team/zainab-photo.jpg?v=6" alt="Zainab" width="760" height="950" loading="lazy" decoding="async" onerror="this.style.display='none'" /></picture></div>
           </div>
         </div></div>
         <h3 class="tm-name">Zainab</h3><p class="tm-role">Graphic Designer</p>
@@ -190,7 +198,7 @@
   <footer class="footer" aria-label="Footer">
     <div class="footer__top">
       <div class="footer__brand">
-        <img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" style="--logo-h:30px" />
+        <picture><source type="image/webp" srcset="assets/brand/logo-wordmark-neon.webp"><img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" style="--logo-h:30px" /></picture>
         <div class="footer__word">The Hook Hub — <strong>Strategy &amp; Design</strong></div>
         <p>Where great ideas take bait. — Bahrain · KSA</p>
       </div>
@@ -204,6 +212,6 @@
     <div class="footer__big" aria-hidden="true">HOOK</div>
   </footer>
 
-  <script type="module" src="assets/js/main.js?v=14"></script>
+  <script type="module" src="assets/js/main.js?v=17"></script>
 </body>
 </html>

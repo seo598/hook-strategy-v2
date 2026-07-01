@@ -21,7 +21,7 @@
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"/>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'"/>
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"/></noscript>
-  <link rel="stylesheet" href="assets/css/style.css?v=32"/>
+  <link rel="stylesheet" href="assets/css/style.css?v=40"/>
   <link rel="icon" type="image/png" sizes="256x256" href="assets/brand/favicon-256.png"/>
   <style>.shv-search{position:absolute;inset:0;width:100%;height:100%;overflow:hidden;background:radial-gradient(120% 120% at 50% 50%,#0A2C18 0%,#084424 38%,#06170D 100%)}
 .shv-search .stage{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
@@ -67,13 +67,20 @@
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Service","name":"SEO, GEO, AEO &amp; AIO","serviceType":"SEO, GEO, AEO &amp; AIO","provider":{"@type":"Organization","name":"Hook Strategy","url":"https://www.thehookstrategy.com/"},"areaServed":[{"@type":"Country","name":"Bahrain"},{"@type":"Country","name":"Saudi Arabia"}],"description":"Rank on Google and get cited by AI answer engines. Search Experience Optimization, end-to-end.","url":"https://www.thehookstrategy.com/service-search.html"}
   </script>
+  <!-- hook-perf-v1 : perf resource hints + instant nav -->
+  <link rel="modulepreload" href="https://esm.sh/gsap@3.12.5" crossorigin fetchpriority="low" />
+  <link rel="modulepreload" href="https://esm.sh/gsap@3.12.5/ScrollTrigger" crossorigin fetchpriority="low" />
+  <link rel="modulepreload" href="https://esm.sh/lenis@1.1.14" crossorigin fetchpriority="low" />
+  <script type="speculationrules">
+  {"prefetch":[{"source":"document","eagerness":"moderate","where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"[target=_blank]"}},{"not":{"selector_matches":"[rel~=external]"}}]}}]}
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <div class="cursor" id="cursor" aria-hidden="true"><div class="cursor__dot"></div><div class="cursor__ring"></div><span class="cursor__label"></span></div>
   <div class="scroll-progress" aria-hidden="true"><span id="scroll-fill"></span></div>
   <header class="nav" id="nav">
-    <a class="nav__brand" href="index.html" aria-label="The Hook — home" data-cursor="hover"><img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" style="--logo-h:24px"/></a>
+    <a class="nav__brand" href="index.html" aria-label="The Hook — home" data-cursor="hover"><picture><source type="image/webp" srcset="assets/brand/logo-wordmark-neon.webp"><img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" style="--logo-h:24px"/></picture></a>
     <nav class="nav__links" aria-label="Primary">
       <a href="index.html" data-cursor="hover">Home</a>
       <a href="services.html" data-cursor="hover">Services</a>
@@ -210,9 +217,9 @@
     <section class="svc-section" aria-label="Selected work">
       <h2 class="svc-section__title reveal-up">selected work.</h2>
       <div class="svc-work">
-      <article class="work-card reveal-up" data-cursor="view" data-tilt><div class="work-card__media work-card__media--logo" data-grad="1"><img class="work-card__loghero" src="assets/img/clients/logos/fahdan.png" alt="Fahdan logo" loading="lazy" decoding="async"/></div><div class="work-card__meta"><span>Brand &middot; Web &middot; SEO</span><h3>Fahdan</h3><p>Business setup &amp; PRO services across Bahrain</p></div><a class="work-card__open" href="case-fahdan.html" aria-label="View the Fahdan case study" data-cursor="view"></a></article>
-      <article class="work-card reveal-up" data-cursor="view" data-tilt><div class="work-card__media work-card__media--logo" data-grad="2"><img class="work-card__loghero" src="assets/img/clients/logos/sahalat.png" alt="Sahalat logo" loading="lazy" decoding="async"/></div><div class="work-card__meta"><span>Brand &middot; Web</span><h3>Sahalat</h3><p>Trade facilitation &middot; KSA &amp; Bahrain</p></div><a class="work-card__open" href="case-sahalat.html" aria-label="View the Sahalat case study" data-cursor="view"></a></article>
-      <article class="work-card reveal-up" data-cursor="view" data-tilt><div class="work-card__media work-card__media--logo" data-grad="3"><img class="work-card__loghero" src="assets/img/clients/logos/energtech.png" alt="EnergTech logo" loading="lazy" decoding="async"/></div><div class="work-card__meta"><span>Brand &middot; Web</span><h3>EnergTech</h3><p>Digital solutions for oil &amp; gas</p></div><a class="work-card__open" href="case-energtech.html" aria-label="View the EnergTech case study" data-cursor="view"></a></article>
+      <article class="work-card reveal-up" data-cursor="view" data-tilt><div class="work-card__media work-card__media--logo" data-grad="1"><picture><source type="image/webp" srcset="assets/img/clients/logos/fahdan.webp"><img class="work-card__loghero" src="assets/img/clients/logos/fahdan.png" alt="Fahdan logo" loading="lazy" decoding="async"/></picture></div><div class="work-card__meta"><span>Brand &middot; Web &middot; SEO</span><h3>Fahdan</h3><p>Business setup &amp; PRO services across Bahrain</p></div><a class="work-card__open" href="case-fahdan.html" aria-label="View the Fahdan case study" data-cursor="view"></a></article>
+      <article class="work-card reveal-up" data-cursor="view" data-tilt><div class="work-card__media work-card__media--logo" data-grad="2"><picture><source type="image/webp" srcset="assets/img/clients/logos/sahalat.webp"><img class="work-card__loghero" src="assets/img/clients/logos/sahalat.png" alt="Sahalat logo" loading="lazy" decoding="async"/></picture></div><div class="work-card__meta"><span>Brand &middot; Web</span><h3>Sahalat</h3><p>Trade facilitation &middot; KSA &amp; Bahrain</p></div><a class="work-card__open" href="case-sahalat.html" aria-label="View the Sahalat case study" data-cursor="view"></a></article>
+      <article class="work-card reveal-up" data-cursor="view" data-tilt><div class="work-card__media work-card__media--logo" data-grad="3"><picture><source type="image/webp" srcset="assets/img/clients/logos/energtech.webp"><img class="work-card__loghero" src="assets/img/clients/logos/energtech.png" alt="EnergTech logo" loading="lazy" decoding="async"/></picture></div><div class="work-card__meta"><span>Brand &middot; Web</span><h3>EnergTech</h3><p>Digital solutions for oil &amp; gas</p></div><a class="work-card__open" href="case-energtech.html" aria-label="View the EnergTech case study" data-cursor="view"></a></article>
       </div>
     </section>
     <section class="svc-section" aria-label="What you get">
@@ -241,7 +248,7 @@
   <footer class="footer" aria-label="Footer">
     <div class="footer__top">
       <div class="footer__brand">
-        <img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" style="--logo-h:30px"/>
+        <picture><source type="image/webp" srcset="assets/brand/logo-wordmark-neon.webp"><img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" style="--logo-h:30px"/></picture>
         <div class="footer__word">The Hook Hub — <strong>Strategy &amp; Design</strong></div>
         <p>Where great ideas take bait. — Bahrain &middot; KSA</p>
       </div>

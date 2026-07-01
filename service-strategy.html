@@ -21,7 +21,7 @@
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"/>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'"/>
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"/></noscript>
-  <link rel="stylesheet" href="assets/css/style.css?v=32"/>
+  <link rel="stylesheet" href="assets/css/style.css?v=40"/>
   <link rel="icon" type="image/png" sizes="256x256" href="assets/brand/favicon-256.png"/>
   <style>.shv-strategy{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:hidden;background:radial-gradient(120% 120% at 50% 42%,#0A2C18 0%,#084424 38%,#06170D 100%)}
 .shv-strategy .stg-svg{position:absolute;inset:0;width:100%;height:100%;display:block}
@@ -60,13 +60,20 @@
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Service","name":"Brand &amp; Creative Strategy","serviceType":"Brand &amp; Creative Strategy","provider":{"@type":"Organization","name":"Hook Strategy","url":"https://www.thehookstrategy.com/"},"areaServed":[{"@type":"Country","name":"Bahrain"},{"@type":"Country","name":"Saudi Arabia"}],"description":"Positioning, narrative and identity systems that make you impossible to ignore — and impossible to copy.","url":"https://www.thehookstrategy.com/service-strategy.html"}
   </script>
+  <!-- hook-perf-v1 : perf resource hints + instant nav -->
+  <link rel="modulepreload" href="https://esm.sh/gsap@3.12.5" crossorigin fetchpriority="low" />
+  <link rel="modulepreload" href="https://esm.sh/gsap@3.12.5/ScrollTrigger" crossorigin fetchpriority="low" />
+  <link rel="modulepreload" href="https://esm.sh/lenis@1.1.14" crossorigin fetchpriority="low" />
+  <script type="speculationrules">
+  {"prefetch":[{"source":"document","eagerness":"moderate","where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"[target=_blank]"}},{"not":{"selector_matches":"[rel~=external]"}}]}}]}
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <div class="cursor" id="cursor" aria-hidden="true"><div class="cursor__dot"></div><div class="cursor__ring"></div><span class="cursor__label"></span></div>
   <div class="scroll-progress" aria-hidden="true"><span id="scroll-fill"></span></div>
   <header class="nav" id="nav">
-    <a class="nav__brand" href="index.html" aria-label="The Hook — home" data-cursor="hover"><img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" style="--logo-h:24px"/></a>
+    <a class="nav__brand" href="index.html" aria-label="The Hook — home" data-cursor="hover"><picture><source type="image/webp" srcset="assets/brand/logo-wordmark-neon.webp"><img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" style="--logo-h:24px"/></picture></a>
     <nav class="nav__links" aria-label="Primary">
       <a href="index.html" data-cursor="hover">Home</a>
       <a href="services.html" data-cursor="hover">Services</a>
@@ -154,9 +161,9 @@
     <section class="svc-section" aria-label="Selected work">
       <h2 class="svc-section__title reveal-up">selected work.</h2>
       <div class="svc-work">
-      <article class="work-card reveal-up" data-cursor="view" data-tilt><div class="work-card__media"><img src="assets/img/clients/deargold.jpg" alt="Dear Gold" width="800" height="500" loading="lazy" decoding="async" /></div><div class="work-card__meta"><span>Branding</span><h3>Dear Gold</h3><p>A brand that belongs in high-end retail</p></div><a class="work-card__open" href="case-deargold.html" aria-label="View the Dear Gold case study" data-cursor="view"></a></article>
-      <article class="work-card reveal-up" data-cursor="view" data-tilt><div class="work-card__media"><img src="assets/img/clients/colombiancoffee.jpg" alt="Colombian Coffee" width="800" height="500" loading="lazy" decoding="async" /></div><div class="work-card__meta"><span>Research &middot; Strategy</span><h3>Colombian Coffee</h3><p>A clear path to market</p></div><a class="work-card__open" href="case-colombian.html" aria-label="View the Colombian Coffee case study" data-cursor="view"></a></article>
-      <article class="work-card reveal-up" data-cursor="view" data-tilt><div class="work-card__media"><img src="assets/img/clients/businesshub.jpg" alt="Business Hub KSA" width="800" height="500" loading="lazy" decoding="async" /></div><div class="work-card__meta"><span>Brand &middot; Space &middot; Social</span><h3>Business Hub KSA</h3><p>A brand worth walking into</p></div><a class="work-card__open" href="case-businesshub.html" aria-label="View the Business Hub KSA case study" data-cursor="view"></a></article>
+      <article class="work-card reveal-up" data-cursor="view" data-tilt><div class="work-card__media"><picture><source type="image/avif" srcset="assets/img/clients/deargold.avif"><source type="image/webp" srcset="assets/img/clients/deargold.webp"><img src="assets/img/clients/deargold.jpg" alt="Dear Gold" width="800" height="500" loading="lazy" decoding="async" /></picture></div><div class="work-card__meta"><span>Branding</span><h3>Dear Gold</h3><p>A brand that belongs in high-end retail</p></div><a class="work-card__open" href="case-deargold.html" aria-label="View the Dear Gold case study" data-cursor="view"></a></article>
+      <article class="work-card reveal-up" data-cursor="view" data-tilt><div class="work-card__media"><picture><source type="image/avif" srcset="assets/img/clients/colombiancoffee.avif"><source type="image/webp" srcset="assets/img/clients/colombiancoffee.webp"><img src="assets/img/clients/colombiancoffee.jpg" alt="Colombian Coffee" width="800" height="500" loading="lazy" decoding="async" /></picture></div><div class="work-card__meta"><span>Research &middot; Strategy</span><h3>Colombian Coffee</h3><p>A clear path to market</p></div><a class="work-card__open" href="case-colombian.html" aria-label="View the Colombian Coffee case study" data-cursor="view"></a></article>
+      <article class="work-card reveal-up" data-cursor="view" data-tilt><div class="work-card__media"><picture><source type="image/avif" srcset="assets/img/clients/businesshub.avif"><source type="image/webp" srcset="assets/img/clients/businesshub.webp"><img src="assets/img/clients/businesshub.jpg" alt="Business Hub KSA" width="800" height="500" loading="lazy" decoding="async" /></picture></div><div class="work-card__meta"><span>Brand &middot; Space &middot; Social</span><h3>Business Hub KSA</h3><p>A brand worth walking into</p></div><a class="work-card__open" href="case-businesshub.html" aria-label="View the Business Hub KSA case study" data-cursor="view"></a></article>
       </div>
     </section>
     <section class="svc-section" aria-label="What you get">
@@ -185,7 +192,7 @@
   <footer class="footer" aria-label="Footer">
     <div class="footer__top">
       <div class="footer__brand">
-        <img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" style="--logo-h:30px"/>
+        <picture><source type="image/webp" srcset="assets/brand/logo-wordmark-neon.webp"><img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" style="--logo-h:30px"/></picture>
         <div class="footer__word">The Hook Hub — <strong>Strategy &amp; Design</strong></div>
         <p>Where great ideas take bait. — Bahrain &middot; KSA</p>
       </div>

@@ -691,10 +691,10 @@ if (burger) {
     movePill(btn);
     imgs.forEach((img) => {
       const cur = img.getAttribute('src');
-      const m = cur.match(/avatar-(?:toon-)?([a-z]+)\.jpg/i);
+      const m = cur.match(/avatar-(?:toon-)?([a-z]+)\.webp/i);
       if (!m) return;
       const q = (cur.match(/\?[^"]*$/) || [''])[0]; // carry the cache-bust query across toggles
-      img.setAttribute('src', `assets/img/team/avatar-${mode === 'toon' ? 'toon-' : ''}${m[1]}.jpg${q}`);
+      img.setAttribute('src', `assets/img/team/avatar-${mode === 'toon' ? 'toon-' : ''}${m[1]}.webp${q}`);
     });
   };
   btns.forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode, b)));

@@ -21,7 +21,7 @@
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'" />
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" /></noscript>
-  <link rel="stylesheet" href="assets/css/style.css?v=32" />
+  <link rel="stylesheet" href="assets/css/style.css?v=40" />
   <link rel="icon" type="image/png" sizes="256x256" href="assets/brand/favicon-256.png" />
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"ItemList","name":"Hook Strategy Services","itemListElement":[
@@ -33,6 +33,13 @@
     {"@type":"ListItem","position":6,"name":"AI Automation & Analytics","url":"https://www.thehookstrategy.com/service-ai.html"}
   ]}
   </script>
+  <!-- hook-perf-v1 : perf resource hints + instant nav -->
+  <link rel="modulepreload" href="https://esm.sh/gsap@3.12.5" crossorigin fetchpriority="low" />
+  <link rel="modulepreload" href="https://esm.sh/gsap@3.12.5/ScrollTrigger" crossorigin fetchpriority="low" />
+  <link rel="modulepreload" href="https://esm.sh/lenis@1.1.14" crossorigin fetchpriority="low" />
+  <script type="speculationrules">
+  {"prefetch":[{"source":"document","eagerness":"moderate","where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"[target=_blank]"}},{"not":{"selector_matches":"[rel~=external]"}}]}}]}
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -40,7 +47,7 @@
   <div class="scroll-progress" aria-hidden="true"><span id="scroll-fill"></span></div>
 
   <header class="nav" id="nav">
-    <a class="nav__brand" href="index.html" aria-label="The Hook — home" data-cursor="hover"><img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" style="--logo-h:24px" /></a>
+    <a class="nav__brand" href="index.html" aria-label="The Hook — home" data-cursor="hover"><picture><source type="image/webp" srcset="assets/brand/logo-wordmark-neon.webp"><img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" style="--logo-h:24px" /></picture></a>
     <nav class="nav__links" aria-label="Primary">
       <a href="index.html" data-cursor="hover">Home</a>
       <a href="services.html" data-cursor="hover">Services</a>
@@ -128,7 +135,7 @@
   <footer class="footer" aria-label="Footer">
     <div class="footer__top">
       <div class="footer__brand">
-        <img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" style="--logo-h:30px" />
+        <picture><source type="image/webp" srcset="assets/brand/logo-wordmark-neon.webp"><img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" style="--logo-h:30px" /></picture>
         <div class="footer__word">The Hook Hub — <strong>Strategy &amp; Design</strong></div>
         <p>Where great ideas take bait. — Bahrain · KSA</p>
       </div>

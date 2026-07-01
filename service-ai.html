@@ -21,7 +21,7 @@
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"/>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'"/>
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"/></noscript>
-  <link rel="stylesheet" href="assets/css/style.css?v=32"/>
+  <link rel="stylesheet" href="assets/css/style.css?v=40"/>
   <link rel="icon" type="image/png" sizes="256x256" href="assets/brand/favicon-256.png"/>
   <style>.shv-ai{position:absolute;inset:0;width:100%;height:100%;overflow:hidden;background:radial-gradient(120% 120% at 30% 25%,#0A2C18 0%,#06170D 70%)}
 .shv-ai svg{display:block;width:100%;height:100%}
@@ -62,13 +62,20 @@
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Service","name":"AI Automation &amp; Analytics","serviceType":"AI Automation &amp; Analytics","provider":{"@type":"Organization","name":"Hook Strategy","url":"https://www.thehookstrategy.com/"},"areaServed":[{"@type":"Country","name":"Bahrain"},{"@type":"Country","name":"Saudi Arabia"}],"description":"Marketing analytics, conversion optimization and AI workflows that compound your team&#x27;s output.","url":"https://www.thehookstrategy.com/service-ai.html"}
   </script>
+  <!-- hook-perf-v1 : perf resource hints + instant nav -->
+  <link rel="modulepreload" href="https://esm.sh/gsap@3.12.5" crossorigin fetchpriority="low" />
+  <link rel="modulepreload" href="https://esm.sh/gsap@3.12.5/ScrollTrigger" crossorigin fetchpriority="low" />
+  <link rel="modulepreload" href="https://esm.sh/lenis@1.1.14" crossorigin fetchpriority="low" />
+  <script type="speculationrules">
+  {"prefetch":[{"source":"document","eagerness":"moderate","where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"[target=_blank]"}},{"not":{"selector_matches":"[rel~=external]"}}]}}]}
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <div class="cursor" id="cursor" aria-hidden="true"><div class="cursor__dot"></div><div class="cursor__ring"></div><span class="cursor__label"></span></div>
   <div class="scroll-progress" aria-hidden="true"><span id="scroll-fill"></span></div>
   <header class="nav" id="nav">
-    <a class="nav__brand" href="index.html" aria-label="The Hook — home" data-cursor="hover"><img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" style="--logo-h:24px"/></a>
+    <a class="nav__brand" href="index.html" aria-label="The Hook — home" data-cursor="hover"><picture><source type="image/webp" srcset="assets/brand/logo-wordmark-neon.webp"><img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" style="--logo-h:24px"/></picture></a>
     <nav class="nav__links" aria-label="Primary">
       <a href="index.html" data-cursor="hover">Home</a>
       <a href="services.html" data-cursor="hover">Services</a>
@@ -163,9 +170,9 @@
     <section class="svc-section" aria-label="Selected work">
       <h2 class="svc-section__title reveal-up">selected work.</h2>
       <div class="svc-work">
-      <article class="work-card reveal-up" data-cursor="view" data-tilt><div class="work-card__media work-card__media--logo" data-grad="1"><img class="work-card__loghero" src="assets/img/clients/logos/makkan.png" alt="Makkan logo" loading="lazy" decoding="async"/></div><div class="work-card__meta"><span>Brand &middot; Web</span><h3>Makkan</h3><p>App &amp; platform identity</p></div><a class="work-card__open" href="case-makkan.html" aria-label="View the Makkan case study" data-cursor="view"></a></article>
-      <article class="work-card reveal-up" data-cursor="view" data-tilt><div class="work-card__media work-card__media--logo" data-grad="3"><img class="work-card__loghero" src="assets/img/clients/logos/energtech.png" alt="EnergTech logo" loading="lazy" decoding="async"/></div><div class="work-card__meta"><span>Brand &middot; Web</span><h3>EnergTech</h3><p>Digital solutions for oil &amp; gas</p></div><a class="work-card__open" href="case-energtech.html" aria-label="View the EnergTech case study" data-cursor="view"></a></article>
-      <article class="work-card reveal-up" data-cursor="view" data-tilt><div class="work-card__media"><img src="assets/img/clients/startupnest.jpg" alt="Startup Nest" width="800" height="500" loading="lazy" decoding="async" /><span class="work-card__logo"><img src="assets/img/clients/logos/startupnest.png" alt="Startup Nest logo" loading="lazy" decoding="async"/></span></div><div class="work-card__meta"><span>Web &middot; Brand</span><h3>Startup Nest</h3><p>A platform built to be taken seriously</p></div><a class="work-card__open" href="case-startupnest.html" aria-label="View the Startup Nest case study" data-cursor="view"></a></article>
+      <article class="work-card reveal-up" data-cursor="view" data-tilt><div class="work-card__media work-card__media--logo" data-grad="1"><picture><source type="image/webp" srcset="assets/img/clients/logos/makkan.webp"><img class="work-card__loghero" src="assets/img/clients/logos/makkan.png" alt="Makkan logo" loading="lazy" decoding="async"/></picture></div><div class="work-card__meta"><span>Brand &middot; Web</span><h3>Makkan</h3><p>App &amp; platform identity</p></div><a class="work-card__open" href="case-makkan.html" aria-label="View the Makkan case study" data-cursor="view"></a></article>
+      <article class="work-card reveal-up" data-cursor="view" data-tilt><div class="work-card__media work-card__media--logo" data-grad="3"><picture><source type="image/webp" srcset="assets/img/clients/logos/energtech.webp"><img class="work-card__loghero" src="assets/img/clients/logos/energtech.png" alt="EnergTech logo" loading="lazy" decoding="async"/></picture></div><div class="work-card__meta"><span>Brand &middot; Web</span><h3>EnergTech</h3><p>Digital solutions for oil &amp; gas</p></div><a class="work-card__open" href="case-energtech.html" aria-label="View the EnergTech case study" data-cursor="view"></a></article>
+      <article class="work-card reveal-up" data-cursor="view" data-tilt><div class="work-card__media"><picture><source type="image/avif" srcset="assets/img/clients/startupnest.avif"><source type="image/webp" srcset="assets/img/clients/startupnest.webp"><img src="assets/img/clients/startupnest.jpg" alt="Startup Nest" width="800" height="500" loading="lazy" decoding="async" /></picture><span class="work-card__logo"><picture><source type="image/avif" srcset="assets/img/clients/logos/startupnest.avif"><source type="image/webp" srcset="assets/img/clients/logos/startupnest.webp"><img src="assets/img/clients/logos/startupnest.png" alt="Startup Nest logo" loading="lazy" decoding="async"/></picture></span></div><div class="work-card__meta"><span>Web &middot; Brand</span><h3>Startup Nest</h3><p>A platform built to be taken seriously</p></div><a class="work-card__open" href="case-startupnest.html" aria-label="View the Startup Nest case study" data-cursor="view"></a></article>
       </div>
     </section>
     <section class="svc-section" aria-label="What you get">
@@ -194,7 +201,7 @@
   <footer class="footer" aria-label="Footer">
     <div class="footer__top">
       <div class="footer__brand">
-        <img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" style="--logo-h:30px"/>
+        <picture><source type="image/webp" srcset="assets/brand/logo-wordmark-neon.webp"><img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" style="--logo-h:30px"/></picture>
         <div class="footer__word">The Hook Hub — <strong>Strategy &amp; Design</strong></div>
         <p>Where great ideas take bait. — Bahrain &middot; KSA</p>
       </div>

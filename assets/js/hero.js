@@ -135,6 +135,10 @@ void main(){
 
 function init(canvas) {
   const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  // Only touch-PRIMARY devices should fall back to tilt. Everything else —
+  // including a narrow desktop window or a small preview panel (where the
+  // width-based `isMobile` is true) — is mouse-driven and must follow the cursor.
+  const isTouch = window.matchMedia('(pointer: coarse)').matches || ('ontouchstart' in window && navigator.maxTouchPoints > 0);
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: !isMobile, powerPreference: 'high-performance' });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
@@ -146,30 +150,52 @@ function init(canvas) {
   const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
   camera.position.set(0, 0, 6);
 
-  // ---- orb ----
-  const detail = isMobile ? 24 : 48;
-  const orbGeo = new THREE.IcosahedronGeometry(1.4, detail);
+  // ---- the hook (brand mark: a 3D fishing hook — "where great ideas take bait") ----
   const orbMat = new THREE.ShaderMaterial({
     vertexShader: orbVert, fragmentShader: orbFrag,
     uniforms: {
-      uTime: { value: 0 }, uAmp: { value: 0.55 }, uMouse: { value: 0 }, uFade: { value: 1 },
+      uTime: { value: 0 }, uAmp: { value: 0.04 }, uMouse: { value: 0 }, uFade: { value: 1 },
       uA: { value: new THREE.Color(0x084424) }, // brand deep green body
       uB: { value: new THREE.Color(0x30cc64) }, // emerald mid
       uC: { value: new THREE.Color(0xd8f404) }, // neon yellow rim
     },
   });
-  const orb = new THREE.Mesh(orbGeo, orbMat);
+
+  // Centerline of a fishing hook, traced top→tip: eye loop, straight shank,
+  // U-bend, and the point curling back up on the inside. (Silhouette verified
+  // as a flat SVG before porting here.)
+  function buildHookGeometry() {
+    const P = []; const V = (x, y) => new THREE.Vector3(x, y, 0);
+    const ex = 0, ey = 1.35, er = 0.22;                 // eye loop
+    for (let a = 250; a >= -80; a -= 14) { const r = a * Math.PI / 180; P.push(V(ex + Math.cos(r) * er, ey + Math.sin(r) * er)); }
+    for (let y = 1.12; y >= -0.35; y -= 0.12) P.push(V(0, y)); // shank
+    const bx = -0.5, by = -0.35, br = 0.5;              // bend + point
+    for (let a = 0; a >= -300; a -= 8) { const r = a * Math.PI / 180; P.push(V(bx + Math.cos(r) * br, by + Math.sin(r) * br)); }
+    const curve = new THREE.CatmullRomCurve3(P, false, 'catmullrom', 0.5);
+    return new THREE.TubeGeometry(curve, isMobile ? 160 : 260, 0.085, isMobile ? 10 : 18, false);
+  }
+  const orbGeo = buildHookGeometry();
+  const hookMesh = new THREE.Mesh(orbGeo, orbMat);
+
+  const orb = new THREE.Group();
+  orb.add(hookMesh);
+
+  // faint fishing line rising from the eye
+  const lineGeo = new THREE.CylinderGeometry(0.007, 0.004, 2.4, 6);
+  lineGeo.translate(0, 1.57 + 1.2, 0);
+  const fishingLine = new THREE.Mesh(lineGeo, new THREE.MeshBasicMaterial({ color: 0x30cc64, transparent: true, opacity: 0.22 }));
+  orb.add(fishingLine);
+
+  // recenter so the hook sways about its own centroid, not the eye
+  orbGeo.computeBoundingBox();
+  const hookCenter = new THREE.Vector3(); orbGeo.boundingBox.getCenter(hookCenter);
+  hookMesh.position.sub(hookCenter);
+  fishingLine.position.sub(hookCenter);
+
+  orb.scale.setScalar(1.15);
   orb.position.x = isMobile ? 0 : 2.3;
   orb.position.y = isMobile ? 1.7 : 0.35;
   scene.add(orb);
-
-  // wireframe halo
-  const halo = new THREE.Mesh(
-    new THREE.IcosahedronGeometry(2.0, 1),
-    new THREE.MeshBasicMaterial({ color: 0x30cc64, wireframe: true, transparent: true, opacity: 0.07 })
-  );
-  halo.position.copy(orb.position);
-  scene.add(halo);
 
   // ---- particles ----
   const COUNT = isMobile ? 1800 : 4200;
@@ -265,12 +291,12 @@ function init(canvas) {
   // ---- interaction ----
   const mouse = new THREE.Vector2(0, 0);
   const target = new THREE.Vector2(0, 0);
-  if (!isMobile) {
-    window.addEventListener('mousemove', (e) => {
-      target.x = (e.clientX / window.innerWidth) * 2 - 1;
-      target.y = -((e.clientY / window.innerHeight) * 2 - 1);
-    }, { passive: true });
-  } else if (window.DeviceOrientationEvent) {
+  // Always track the mouse — fires on any pointer device, at any viewport width.
+  window.addEventListener('mousemove', (e) => {
+    target.x = (e.clientX / window.innerWidth) * 2 - 1;
+    target.y = -((e.clientY / window.innerHeight) * 2 - 1);
+  }, { passive: true });
+  if (isTouch && window.DeviceOrientationEvent) {
     window.addEventListener('deviceorientation', (e) => {
       target.x = THREE.MathUtils.clamp((e.gamma || 0) / 35, -1, 1);
       target.y = THREE.MathUtils.clamp((e.beta || 0) / 60 - 0.5, -1, 1);
@@ -313,32 +339,41 @@ function init(canvas) {
     if (!reduceMotion) {
       orbMat.uniforms.uTime.value = t;
       pMat.uniforms.uTime.value = t;
-      orb.rotation.y = t * 0.12 + mouse.x * 0.4;
-      orb.rotation.x = mouse.y * 0.3;
-      halo.rotation.y = -t * 0.06;
+      // the hook dangles and sways on its line rather than spinning
+      orb.rotation.y = Math.sin(t * 0.3) * 0.6 + mouse.x * 0.4;
+      orb.rotation.z = Math.sin(t * 0.5) * 0.06;
+      orb.rotation.x = mouse.y * 0.25;
       points.rotation.y = t * 0.02 + mouse.x * 0.15;
     }
     orbMat.uniforms.uMouse.value += (mlen - orbMat.uniforms.uMouse.value) * 0.05;
-    orbMat.uniforms.uAmp.value = 0.55 + sp * 0.5;
+    orbMat.uniforms.uAmp.value = 0.04 + sp * 0.12;
     pMat.uniforms.uMouse.value.set(mouse.x * 0.6, mouse.y * 0.6);
     grade.uniforms.uTime.value = t;
 
     // scroll handoff: the orb recedes, shrinks and dissolves as the next
     // section rises — hero → statement reads as one continuous camera move
     const handoff = THREE.MathUtils.smoothstep(sp, 0.0, 1.0);
-    const oScale = 1.0 - handoff * 0.45;
+    const oScale = 1.15 * (1.0 - handoff * 0.45);
     orb.scale.setScalar(oScale);
-    halo.scale.setScalar(oScale);
     orbMat.uniforms.uFade.value = 1.0 - handoff * 0.85;
 
-    // camera: parallax + scroll dolly
-    camera.position.x += (mouse.x * 0.6 - camera.position.x) * 0.04;
-    camera.position.y += (mouse.y * 0.4 - camera.position.y) * 0.04;
-    camera.position.z = 6 + sp * 4.5;
-    orb.position.y += ((isMobile ? 1.7 : 0.35) - sp * 1.2 - orb.position.y) * 0.05;
+    // the hook tracks the cursor across the hero. Drive it from the RAW cursor
+    // (target) with a single smoothing stage so it follows crisply instead of
+    // lagging through two cascaded low-pass filters (mouse.lerp → position.lerp).
+    const baseX = isMobile ? 0 : 0.4;
+    const baseY = isMobile ? (isTouch ? 1.7 : 0.6) : 0.15;
+    const rangeX = isTouch ? 0.6 : 3.0, rangeY = isTouch ? 0.6 : 2.0;
+    const followX = baseX + target.x * rangeX;
+    const followY = baseY + target.y * rangeY - sp * 1.2;
+    orb.position.x += (followX - orb.position.x) * 0.14;
+    orb.position.y += (followY - orb.position.y) * 0.14;
     orb.position.z = -sp * 2.0;
-    halo.position.copy(orb.position);
-    camera.lookAt(orb.position.x * 0.4, 0, 0);
+
+    // camera holds nearly steady (tiny parallax) so the hook visibly travels to the cursor
+    camera.position.x += (mouse.x * 0.2 - camera.position.x) * 0.04;
+    camera.position.y += (mouse.y * 0.12 - camera.position.y) * 0.04;
+    camera.position.z = 6 + sp * 4.5;
+    camera.lookAt(0, 0, 0);
 
     composer.render();
   }

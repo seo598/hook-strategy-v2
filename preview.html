@@ -3,7 +3,14 @@ html,body{margin:0;background:#0C140F}
 .row{display:flex;align-items:center;gap:40px;padding:30px}
 .b{background:#0C140F}
 img{image-rendering:auto}
-</style></head><body>
+</style>  <!-- hook-perf-v1 : perf resource hints + instant nav -->
+  <link rel="modulepreload" href="https://esm.sh/gsap@3.12.5" crossorigin fetchpriority="low" />
+  <link rel="modulepreload" href="https://esm.sh/gsap@3.12.5/ScrollTrigger" crossorigin fetchpriority="low" />
+  <link rel="modulepreload" href="https://esm.sh/lenis@1.1.14" crossorigin fetchpriority="low" />
+  <script type="speculationrules">
+  {"prefetch":[{"source":"document","eagerness":"moderate","where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"[target=_blank]"}},{"not":{"selector_matches":"[rel~=external]"}}]}}]}
+  </script>
+</head><body>
 <div class="row">
   <img class="b" src="emblem.svg" width="256" height="256">
   <img class="b" src="emblem.svg" width="64" height="64">

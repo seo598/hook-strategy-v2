@@ -22,7 +22,7 @@
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"/>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'"/>
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"/></noscript>
-  <link rel="stylesheet" href="assets/css/style.css?v=38"/>
+  <link rel="stylesheet" href="assets/css/style.css?v=40"/>
   <link rel="icon" type="image/png" sizes="256x256" href="assets/brand/favicon-256.png"/>
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"WebPage","name":"The Crossing — an interactive tale by Hook Strategy","url":"https://www.thehookstrategy.com/experience.html","description":"An interactive tale you travel through, from adrift to a growing new land — the story of The Hook.","publisher":{"@type":"Organization","name":"Hook Strategy","url":"https://www.thehookstrategy.com/"}}
@@ -38,6 +38,13 @@
   </script>
   <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js" crossorigin fetchpriority="low" />
   <link rel="modulepreload" href="assets/js/experience.js?v=4" fetchpriority="low" />
+  <!-- hook-perf-v1 : perf resource hints + instant nav -->
+  <link rel="modulepreload" href="https://esm.sh/gsap@3.12.5" crossorigin fetchpriority="low" />
+  <link rel="modulepreload" href="https://esm.sh/gsap@3.12.5/ScrollTrigger" crossorigin fetchpriority="low" />
+  <link rel="modulepreload" href="https://esm.sh/lenis@1.1.14" crossorigin fetchpriority="low" />
+  <script type="speculationrules">
+  {"prefetch":[{"source":"document","eagerness":"moderate","where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"[target=_blank]"}},{"not":{"selector_matches":"[rel~=external]"}}]}}]}
+  </script>
 </head>
 <body class="xp-body">
   <a class="skip-link" href="#xp-story">Skip to the story text</a>
@@ -49,7 +56,7 @@
     <!-- Start gate (also unlocks audio via user gesture) -->
     <div class="xp-gate" id="xp-gate">
       <div class="xp-gate__inner">
-        <img class="logo-img xp-gate__logo" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" decoding="async" width="150" height="28" style="--logo-h:28px" />
+        <picture><source type="image/webp" srcset="assets/brand/logo-wordmark-neon.webp"><img class="logo-img xp-gate__logo" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" decoding="async" width="150" height="28" style="--logo-h:28px" /></picture>
         <p class="xp-gate__eyebrow">An interactive tale</p>
         <h1 class="xp-gate__title">the crossing.</h1>
         <p class="xp-gate__lede">Four chapters, best with sound. Press&nbsp;and&nbsp;hold to travel — release to rest at each shore.</p>
@@ -65,7 +72,7 @@
     <!-- Minimal chrome -->
     <header class="xp-chrome" id="xp-chrome" hidden>
       <a class="xp-home" href="index.html" aria-label="The Hook — home" data-cursor="hover">
-        <img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" decoding="async" width="96" height="18" style="--logo-h:18px" />
+        <picture><source type="image/webp" srcset="assets/brand/logo-wordmark-neon.webp"><img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" decoding="async" width="96" height="18" style="--logo-h:18px" /></picture>
       </a>
       <div class="xp-progress" aria-hidden="true"><span id="xp-progress-fill"></span></div>
       <div class="xp-chrome__right">

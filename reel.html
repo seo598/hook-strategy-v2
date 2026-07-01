@@ -22,7 +22,7 @@
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"/>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'"/>
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"/></noscript>
-  <link rel="stylesheet" href="assets/css/style.css?v=36"/>
+  <link rel="stylesheet" href="assets/css/style.css?v=40"/>
   <link rel="icon" type="image/png" sizes="256x256" href="assets/brand/favicon-256.png"/>
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"CollectionPage","name":"The Reel — Hook Strategy","url":"https://www.thehookstrategy.com/reel.html","description":"An immersive scroll through Hook Strategy's selected work.","mainEntity":{"@type":"ItemList","itemListElement":[
@@ -48,6 +48,13 @@
   </script>
   <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js" crossorigin fetchpriority="low" />
   <link rel="modulepreload" href="assets/js/reel.js" fetchpriority="low" />
+  <!-- hook-perf-v1 : perf resource hints + instant nav -->
+  <link rel="modulepreload" href="https://esm.sh/gsap@3.12.5" crossorigin fetchpriority="low" />
+  <link rel="modulepreload" href="https://esm.sh/gsap@3.12.5/ScrollTrigger" crossorigin fetchpriority="low" />
+  <link rel="modulepreload" href="https://esm.sh/lenis@1.1.14" crossorigin fetchpriority="low" />
+  <script type="speculationrules">
+  {"prefetch":[{"source":"document","eagerness":"moderate","where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"[target=_blank]"}},{"not":{"selector_matches":"[rel~=external]"}}]}}]}
+  </script>
 </head>
 <body class="reel-body">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -58,7 +65,7 @@
 
     <header class="reel__chrome">
       <a class="reel__home" href="index.html" aria-label="The Hook — home" data-cursor="hover">
-        <img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" decoding="async" width="110" height="20" style="--logo-h:20px" />
+        <picture><source type="image/webp" srcset="assets/brand/logo-wordmark-neon.webp"><img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" decoding="async" width="110" height="20" style="--logo-h:20px" /></picture>
       </a>
       <div class="reel__progress" aria-hidden="true"><span id="reel-progress-fill"></span></div>
       <a class="reel__exit" href="work.html" data-cursor="hover" aria-label="Exit the reel to Work">Exit <span aria-hidden="true">✕</span></a>
@@ -90,7 +97,7 @@
       <div class="reel__panel">
         <p class="reel__num reveal-up">01 / 08</p>
         <p class="reel__cat reveal-up">Brand &middot; Web &middot; SEO</p>
-        <h2 class="reel__proj reveal-up"><span class="cs-hero__badge reel__badge" aria-hidden="true"><img src="assets/img/clients/logos/fahdan.png" alt=""/></span>Fahdan</h2>
+        <h2 class="reel__proj reveal-up"><span class="cs-hero__badge reel__badge" aria-hidden="true"><picture><source type="image/webp" srcset="assets/img/clients/logos/fahdan.webp"><img src="assets/img/clients/logos/fahdan.png" alt=""/></picture></span>Fahdan</h2>
         <p class="reel__headline reveal-up">A business-setup brand that ranks and converts.</p>
         <a class="reel__link" href="case-fahdan.html" data-cursor="hover">View case study <span aria-hidden="true">&rarr;</span></a>
       </div>
@@ -110,7 +117,7 @@
       <div class="reel__panel">
         <p class="reel__num reveal-up">03 / 08</p>
         <p class="reel__cat reveal-up">Campaign &middot; Social</p>
-        <h2 class="reel__proj reveal-up"><span class="cs-hero__badge reel__badge" aria-hidden="true"><img src="assets/img/clients/logos/amazing.png" alt=""/></span>Amazing Bahrain</h2>
+        <h2 class="reel__proj reveal-up"><span class="cs-hero__badge reel__badge" aria-hidden="true"><picture><source type="image/webp" srcset="assets/img/clients/logos/amazing.webp"><img src="assets/img/clients/logos/amazing.png" alt=""/></picture></span>Amazing Bahrain</h2>
         <p class="reel__headline reveal-up">260,000 views in two weeks.</p>
         <a class="reel__link" href="case-amazingbahrain.html" data-cursor="hover">View case study <span aria-hidden="true">&rarr;</span></a>
       </div>
@@ -120,7 +127,7 @@
       <div class="reel__panel">
         <p class="reel__num reveal-up">04 / 08</p>
         <p class="reel__cat reveal-up">Web &middot; Brand</p>
-        <h2 class="reel__proj reveal-up"><span class="cs-hero__badge reel__badge" aria-hidden="true"><img src="assets/img/clients/logos/startupnest.png" alt=""/></span>Startup Nest</h2>
+        <h2 class="reel__proj reveal-up"><span class="cs-hero__badge reel__badge" aria-hidden="true"><picture><source type="image/avif" srcset="assets/img/clients/logos/startupnest.avif"><source type="image/webp" srcset="assets/img/clients/logos/startupnest.webp"><img src="assets/img/clients/logos/startupnest.png" alt=""/></picture></span>Startup Nest</h2>
         <p class="reel__headline reveal-up">A platform built to be taken seriously.</p>
         <a class="reel__link" href="case-startupnest.html" data-cursor="hover">View case study <span aria-hidden="true">&rarr;</span></a>
       </div>
@@ -150,7 +157,7 @@
       <div class="reel__panel">
         <p class="reel__num reveal-up">07 / 08</p>
         <p class="reel__cat reveal-up">Brand &middot; Web</p>
-        <h2 class="reel__proj reveal-up"><span class="cs-hero__badge reel__badge" aria-hidden="true"><img src="assets/img/clients/logos/makkan.png" alt=""/></span>Makkan</h2>
+        <h2 class="reel__proj reveal-up"><span class="cs-hero__badge reel__badge" aria-hidden="true"><picture><source type="image/webp" srcset="assets/img/clients/logos/makkan.webp"><img src="assets/img/clients/logos/makkan.png" alt=""/></picture></span>Makkan</h2>
         <p class="reel__headline reveal-up">App &amp; platform identity.</p>
         <a class="reel__link" href="case-makkan.html" data-cursor="hover">View case study <span aria-hidden="true">&rarr;</span></a>
       </div>
@@ -160,7 +167,7 @@
       <div class="reel__panel">
         <p class="reel__num reveal-up">08 / 08</p>
         <p class="reel__cat reveal-up">Brand &middot; Web</p>
-        <h2 class="reel__proj reveal-up"><span class="cs-hero__badge reel__badge" aria-hidden="true"><img src="assets/img/clients/logos/propertyhub.png" alt=""/></span>Property Hub</h2>
+        <h2 class="reel__proj reveal-up"><span class="cs-hero__badge reel__badge" aria-hidden="true"><picture><source type="image/webp" srcset="assets/img/clients/logos/propertyhub.webp"><img src="assets/img/clients/logos/propertyhub.png" alt=""/></picture></span>Property Hub</h2>
         <p class="reel__headline reveal-up">Property management &amp; rental.</p>
         <a class="reel__link" href="case-propertyhub.html" data-cursor="hover">View case study <span aria-hidden="true">&rarr;</span></a>
       </div>
