@@ -135,6 +135,8 @@ void main(){
 
 function init(canvas) {
   const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  // On Arabic (RTL) pages the text is right-aligned, so mirror the hook to the left.
+  const RTL = document.documentElement.getAttribute('dir') === 'rtl';
   // Only touch-PRIMARY devices should fall back to tilt. Everything else —
   // including a narrow desktop window or a small preview panel (where the
   // width-based `isMobile` is true) — is mouse-driven and must follow the cursor.
@@ -195,7 +197,7 @@ function init(canvas) {
   // On phones the portrait viewport makes the hook fill the screen + bloom
   // floods green — keep it a small upper accent instead of a backdrop.
   orb.scale.setScalar(isMobile ? 0.62 : 1.15);
-  orb.position.x = isMobile ? 0.3 : 2.3;
+  orb.position.x = (isMobile ? 0.3 : 2.3) * (RTL ? -1 : 1);
   orb.position.y = isMobile ? 1.85 : 0.35;
   scene.add(orb);
 
@@ -362,7 +364,7 @@ function init(canvas) {
     // the hook tracks the cursor across the hero. Drive it from the RAW cursor
     // (target) with a single smoothing stage so it follows crisply instead of
     // lagging through two cascaded low-pass filters (mouse.lerp → position.lerp).
-    const baseX = isMobile ? 0.3 : 0.4;
+    const baseX = (isMobile ? 0.3 : 0.4) * (RTL ? -1 : 1);
     const baseY = isMobile ? (isTouch ? 1.85 : 1.3) : 0.15;
     const rangeX = isTouch ? 0.45 : 3.0, rangeY = isTouch ? 0.4 : 2.0;
     const followX = baseX + target.x * rangeX;

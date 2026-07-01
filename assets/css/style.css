@@ -1026,6 +1026,24 @@ html:has(.reel) { background: #06170d; }
 .reel__unit { font-size: 0.5em; font-weight: 600; color: var(--text-mute); letter-spacing: -0.01em; }
 .reel__take { font-size: 1.02rem; line-height: 1.55; color: var(--text-soft); max-width: 30rem; margin-bottom: 1.4rem; }
 .reel__src { font-family: var(--font-display); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-mute); }
+
+/* ---------- Arabic / RTL ---------- */
+html[dir="rtl"] { font-family: 'Tajawal', 'Inter', system-ui, sans-serif; }
+[dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3, [dir="rtl"] h4,
+[dir="rtl"] p, [dir="rtl"] a, [dir="rtl"] span, [dir="rtl"] strong,
+[dir="rtl"] li, [dir="rtl"] button, [dir="rtl"] input, [dir="rtl"] textarea, [dir="rtl"] label {
+  font-family: 'Tajawal', 'Inter', system-ui, sans-serif;
+}
+/* Arabic reads right-to-left — mirror the hero scrim so the dark side sits under the (right-aligned) text. */
+[dir="rtl"] .hero::after {
+  background: linear-gradient(265deg, var(--bg) 4%, rgba(12,20,15,0.72) 32%, rgba(12,20,15,0.15) 60%, transparent 78%),
+              linear-gradient(0deg, var(--bg) 1%, transparent 22%);
+}
+/* EN / العربية language toggle pill in the nav */
+.nav__lang { font-family: var(--font-display); font-weight: 700; font-size: 0.78rem; letter-spacing: 0.06em;
+  border: 1px solid var(--line-2); border-radius: 100px; padding: 0.25rem 0.7rem; color: var(--text-soft);
+  transition: color 0.3s var(--ease), background 0.3s var(--ease), border-color 0.3s var(--ease); }
+.nav__lang:hover, .nav__lang:focus-visible { color: var(--bg); background: var(--accent); border-color: var(--accent); }
 .reel__link { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-display); font-weight: 600; color: var(--accent); transition: gap 0.3s var(--ease); }
 .reel__link:hover { gap: 0.9rem; }
 
