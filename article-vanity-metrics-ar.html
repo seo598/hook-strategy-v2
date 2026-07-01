@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="color-scheme" content="dark"/>
+  <meta name="theme-color" content="#06170D"/>
+  <title>نهاية مقاييس الغرور — الهوك</title>
+  <meta name="description" content="لماذا نقيس خطّ الأنابيب لا مرّات الظهور — وكيف نعيد بناء التقارير حول الإيرادات."/>
+  <link rel="canonical" href="https://www.thehookstrategy.com/article-vanity-metrics-ar.html"/>
+  <meta name="robots" content="index, follow"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:site_name" content="الهوك"/>
+  <meta property="og:title" content="نهاية مقاييس الغرور — الهوك"/>
+  <meta property="og:description" content="لماذا نقيس خطّ الأنابيب لا مرّات الظهور — وكيف نعيد بناء التقارير حول الإيرادات."/>
+  <meta property="og:url" content="https://www.thehookstrategy.com/article-vanity-metrics-ar.html"/>
+  <meta property="og:image" content="https://www.thehookstrategy.com/assets/img/og.jpg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="preconnect" href="https://esm.sh" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" media="print" onload="this.media='all'"/>
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap"/></noscript>
+  <link rel="stylesheet" href="assets/css/style.css?v=42"/>
+  <link rel="icon" type="image/png" sizes="256x256" href="assets/brand/favicon-256.png"/>
+  <link rel="alternate" hreflang="en" href="https://www.thehookstrategy.com/article-vanity-metrics.html"/>
+  <link rel="alternate" hreflang="ar" href="https://www.thehookstrategy.com/article-vanity-metrics-ar.html"/>
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "BlogPosting", "headline": "نهاية مقاييس الغرور", "description": "لماذا نقيس خطّ الأنابيب لا مرّات الظهور — وكيف نعيد بناء التقارير حول الإيرادات.", "datePublished": "2026-06-01", "articleSection": "Performance", "author": {"@type": "Organization", "name": "الهوك"}, "publisher": {"@type": "Organization", "name": "الهوك", "url": "https://www.thehookstrategy.com/"}, "url": "https://www.thehookstrategy.com/article-vanity-metrics-ar.html", "inLanguage": "ar"}
+  </script>
+  <!-- hook-perf-v1 : perf resource hints + instant nav -->
+  <link rel="modulepreload" href="https://esm.sh/gsap@3.12.5" crossorigin fetchpriority="low" />
+  <link rel="modulepreload" href="https://esm.sh/gsap@3.12.5/ScrollTrigger" crossorigin fetchpriority="low" />
+  <link rel="modulepreload" href="https://esm.sh/lenis@1.1.14" crossorigin fetchpriority="low" />
+  <link rel="modulepreload" href="assets/js/main.js?v=17" fetchpriority="low" />
+  <script type="speculationrules">
+  {"prefetch":[{"source":"document","eagerness":"moderate","where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"[target=_blank]"}},{"not":{"selector_matches":"[rel~=external]"}}]}}]}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">تخطَّ إلى المحتوى</a>
+  <div class="cursor" id="cursor" aria-hidden="true"><div class="cursor__dot"></div><div class="cursor__ring"></div><span class="cursor__label"></span></div>
+  <div class="scroll-progress" aria-hidden="true"><span id="scroll-fill"></span></div>
+  <header class="nav" id="nav">
+    <a class="nav__brand" href="index-ar.html" aria-label="الهوك — الرئيسية" data-cursor="hover"><img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="الهوك" style="--logo-h:24px" /></a>
+    <nav class="nav__links" aria-label="التنقّل الأساسي">
+      <a href="index-ar.html" data-cursor="hover">الرئيسية</a>
+      <a href="services-ar.html" data-cursor="hover">خدماتنا</a>
+      <a href="work-ar.html" data-cursor="hover">أعمالنا</a>
+      <a href="index-ar.html#contact" data-cursor="hover">تواصل</a>
+      <a class="nav__lang" href="article-vanity-metrics.html" hreflang="en" data-cursor="hover">EN</a>
+    </nav>
+    <a href="start-project-ar.html" class="btn btn--pill nav__cta" data-cursor="hover" data-magnetic><span>ابدأ مشروعك</span></a>
+    <button class="nav__burger" id="burger" aria-label="فتح القائمة" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
+  </header>
+  <div class="menu" id="menu" aria-hidden="true">
+    <nav class="menu__links" aria-label="قائمة الجوّال">
+      <a href="index-ar.html" data-cursor="hover"><span>٠١</span>الرئيسية</a>
+      <a href="services-ar.html" data-cursor="hover"><span>٠٢</span>خدماتنا</a>
+      <a href="work-ar.html" data-cursor="hover"><span>٠٣</span>أعمالنا</a>
+      <a href="start-project-ar.html" data-cursor="hover"><span>٠٤</span>ابدأ مشروعك</a>
+      <a href="index-ar.html#contact" data-cursor="hover"><span>٠٥</span>تواصل</a>
+      <a href="article-vanity-metrics.html" hreflang="en" data-cursor="hover"><span>EN</span>English</a>
+    </nav>
+    <div class="menu__foot"><a href="mailto:hello@thehookstrategy.com">hello@thehookstrategy.com</a><a href="https://www.instagram.com/thehookstrategies" target="_blank" rel="noopener">إنستغرام ↗</a></div>
+  </div>
+  <main id="main">
+    <article class="section article" aria-label="نهاية مقاييس الغرور">
+      <div class="article-hero">
+        <p class="svc-breadcrumb"><a href="index-ar.html">الرئيسية</a> <span class="sep">/</span> <a href="journal-ar.html">المدوّنة</a> <span class="sep">/</span> <span class="cur">نهاية مقاييس الغرور</span></p>
+        <span class="post__cat">الأداء</span>
+        <h1 class="article-hero__title">نهاية مقاييس الغرور</h1>
+        <p class="article-hero__dek reveal-up">لماذا نقيس خطّ الأنابيب لا مرّات الظهور — وكيف نعيد بناء التقارير حول الإيرادات.</p>
+        <div class="article-meta"><span>يونيو 2026</span><span aria-hidden="true">&middot;</span><span>قراءة 5 دقائق</span><span aria-hidden="true">&middot;</span><span>الهوك</span></div>
+      </div>
+      <div class="article-body reveal-up">
+<p>في مكانٍ ما من الخليج الآن، يُبنى عرضٌ تقديميّ للتسويق. على الشريحة الثالثة رقمٌ ضخم. اثنا عشر مليون مرّة ظهور. وربما رقم وصولٍ بفاصلةٍ في موضعٍ مُغرٍ. الجميع يومئون رضًا. الرقم كبير، والمنحنى يصعد، والغرفة تشعر بالارتياح. ولم يُربَط دينارٌ واحد من هذا كلّه بالإيرادات.</p><p>مرّات الظهور هي أسهل شيء يُنتَج في التسويق، وأصعب شيء يُبرَّر. ولهذا بالضبط تبقى على قيد الحياة. مقياس الغرور هو أيّ رقمٍ تُدرجه في تقريرك لأنه يصعد، لا لأنه يخبرك بما ينبغي فعله تاليًا. تخلَّص منها. لا لأنها تبدو خادعة، بل لأنها تزاحم المقاييس التي تدير عملك فعلًا.</p><h2>لماذا تكذب عليك الأرقام الكبيرة</h2><p>الوصول، ومرّات الظهور، وعدد المتابعين، ومعدّل التفاعل تتشارك عيبًا قاتلًا واحدًا: لا يُكلّف أيٌّ منها المشتري شيئًا. الإعجاب مجّانيّ. المشاهدة لا إراديّة. المتابَعة اندفاعةٌ عابرة ينساها صاحبها قبل الغداء. المقاييس التي لا تُكلّف الجمهور شيئًا لا تخبرك بشيءٍ عن النيّة، والنيّة هي الشيء الوحيد الذي يسبق المال.</p><p>وهي أيضًا سهلة التلاعب إلى حدٍّ مضحك. تريد مرّات ظهور أكثر؟ وسِّع الجمهور واخفض المعايير. تريد معدّل تفاعلٍ أعلى؟ انشر استطلاعًا عن أيّ برياني أفضل. الأرقام تتحرّك. وخطّ الأنابيب لا يتحرّك. حين يمكن تحسين مقياسٍ دون أن يزداد العمل عافيةً، فإنّ التحسين من أجله ليس عديم الجدوى فحسب، بل مُكلفٌ فعلًا. أنت تدفع لفريقٍ كي يطارد لوحة نتائج لا يشاهدها أحد.</p><p>الاختبار الصادق لأيّ مقياسٍ سؤالٌ واحد: <strong>لو تضاعف هذا الرقم بين ليلةٍ وضحاها، هل سأغيّر قرارًا واحدًا؟</strong> إن كان الجواب لا، فهو زينة. ضعه في ملحقٍ ولا تذكره في اجتماع قيادةٍ مرّةً أخرى.</p><h2>ابنِ لوحة القيادة بالعكس، انطلاقًا من الإيرادات</h2><p>تُبنى معظم لوحات القيادة من الأسفل إلى الأعلى. تبدأ بما تمنحك إياه المنصّات مجّانًا، مرّات الظهور والنقرات، وتكدّس صعودًا آملًا أن يبلغ البرج الإيرادات. لكنه لا يبلغها أبدًا. ابنِها في الاتجاه المعاكس. ابدأ من المال وسِر إلى الوراء.</p><p>هذا هو العمود الفقري، بدءًا من السطر الأعلى:</p><ul><li><strong>الإيرادات، ثم خطّ الأنابيب المؤهَّل.</strong> الصفقات التي يمكنك إغلاقها فعلًا، مُرجَّحةً بحسب مرحلتها. هذا هو الرقم الذي يعيش عليه العمل.</li><li><strong>خطّ الأنابيب الذي يصنعه التسويق والذي يؤثّر فيه.</strong> افصل بينهما وأدرجهما معًا. المصنوع هو ما بدأته أنت؛ والمؤثَّر فيه هو ما لمسته. الخلط بينهما هو ما يجعل فرق التسويق إما تُبالغ في البيع أو تُسلَب حقّها في الفضل.</li><li><strong>سرعة التحويل.</strong> كم يستغرق العميل المحتمل ليتحرّك من أوّل لمسة إلى مؤهَّل إلى مُغلَق. السرعة مقياسٌ يفهمه المال فورًا، لأنّ خطّ الأنابيب البطيء نقدٌ راكد.</li><li><strong>CAC ونسبة CAC إلى LTV.</strong> التكلفة الكاملة لاكتساب عميلٍ مقابل ما يساويه ذلك العميل. إن كنت لا تعرف هذا لكلّ قناةٍ على حدة، فأنت لا تعرف أيّ قناةٍ تموّل.</li><li><strong>الأثر الإضافيّ (Incrementality).</strong> الأصعب والأهم. ليس ما تدّعيه نسبة الإسناد للنقرة الأخيرة، بل ما لم يكن ليحدث لولا الإنفاق. العميل الذي كان سيبحث عن اسم علامتك ويشتري على أيّ حال ليس انتصارًا تسويقيًّا. توقّف عن محاسبة نفسك على مبيعاتٍ كنت ستحقّقها مجّانًا.</li></ul><p>لاحظ ما هو غائب. لا مرّات ظهور. لا وصول. لا عدد متابعين. تلك يمكن أن تعيش في طبقةٍ أدنى كمدخلاتٍ تشخيصيّة، تمامًا كما يوجد مؤشّر حرارة المحرّك لكنه لا يظهر في قائمة أرباحك وخسائرك. إنها تفسّر الحركة. وليست هي الهدف.</p><h3>ملاحظة عن الأثر الإضافيّ، لأنّ الجميع يتجاوزه</h3><p>الأثر الإضافيّ مُزعج لأنه يُصغّر عادةً أرقامك المُبلَّغ عنها. اختبارات الحجب الجغرافيّ، حيث توقف الإنفاق في سوقٍ واحدة وتراقب ما يحدث، هي أنظف اختبارٍ يمكن لمعظم شركات الخليج إجراؤه فعلًا. أوقف البحث المدفوع في الدمّام ثلاثة أسابيع بينما تُشغّله الرياض بكامل طاقته. الفجوة بينهما أقرب إلى مساهمتك الحقيقية ممّا يمنحك إياه أيّ نموذج إسنادٍ على الإطلاق. سيكون رقمًا أصغر ممّا تُظهره لوحة قيادتك الآن. ذلك الرقم الأصغر هو الحقيقيّ، ورقمٌ صادقٌ تستطيع الدفاع عنه يهزم رقمًا مُغريًا لا تستطيع.</p><h2>كيف تخاطب المدير الماليّ دون أن تُقصى</h2><p>المدير الماليّ ليس عدوّك. المدير الماليّ هو الشخص الوحيد في المبنى الذي سيحمي ميزانيتك بمجرّد أن تتحدّث بلغته، وتلك اللغة ليست مرّات الظهور. إنها فترة الاسترداد، وهامش المساهمة، والنقد.</p><p>ادخل ومعك ثلاثة أشياء. أوّلًا: التكلفة الداخلة، والإيراد الخارج، والفارق الزمنيّ بينهما، أي فترة الاسترداد. يستطيع المدير الماليّ تمويل قناةٍ فترة استردادها ستّة أشهر أسهل بكثير من قناةٍ بهالة علامةٍ غامضة. ثانيًا: نطاق ثقةٍ لا رقمًا بطوليًّا واحدًا. أن تقول إنّ التسويق أثّر في خطّ أنابيب بين أربعة وستّة ملايين، وهذه هي طريقة اختبارنا لذلك، يكسب ثقةً أكبر من رقمٍ دقيقٍ إلى حدّ الريبة بلا منهجٍ خلفه. ثالثًا: صياغة المفاضلة. لا «أعطني ميزانيةً أكثر» بل «خمسون ألفًا إضافيّة هنا تعيد تقريبًا هذا، وهنا يتوقّف مفعولها». أنت تُسلّمه رافعة، لا أمنية.</p><blockquote>المال لا يرتاب في التسويق لأنّ التسويق مبدع. يرتاب فيه لأنّ التسويق يواصل الإبلاغ عن أرقامٍ لا تظهر قطّ في البنك.</blockquote><p>أصلِح ذلك، وتنقلب العلاقة. تكفّ عن الدفاع عن الإنفاق، ويبدأ سؤالك عن أين تضع المزيد.</p><p>مقياس الغرور لا يموت لأنّ قتله صار موضة. يموت لأنه لم يدفع ثمن نفسه قطّ. أدرِج الأرقام التي تغيّر القرارات، وابنِ لوحة قيادتك نزولًا من الإيرادات بدل الصعود من مرّات الظهور، وقدِّم للمدير الماليّ فترة استردادٍ بدل رقم وصول. افعل ذلك، ولن تضطرّ مرّةً أخرى إلى شرح لماذا شاهد اثنا عشر مليون شخصٍ شيئًا اشتراه اثنا عشر منهم.</p>
+      </div>
+      <div class="article-foot">
+        <a href="journal-ar.html" data-cursor="hover">&larr; كل المقالات</a>
+        <a href="start-project-ar.html" data-cursor="hover">ابدأ مشروعك &rarr;</a>
+      </div>
+      <div class="article-related">
+        <h2>تابع القراءة</h2>
+        <div class="svc-related"><a href="article-performance-creative-ar.html" data-cursor="hover"><span>الإبداع هو رافعة الأداء الأخيرة</span><span aria-hidden="true">&rarr;</span></a><a href="article-ai-citations-ar.html" data-cursor="hover"><span>كيف تجعل ChatGPT يستشهد بعلامتك</span><span aria-hidden="true">&rarr;</span></a><a href="article-hook-that-scales-ar.html" data-cursor="hover"><span>تصميم خطّافٍ يتوسّع</span><span aria-hidden="true">&rarr;</span></a></div>
+      </div>
+    </article>
+    <div class="svc-cta">
+      <div class="svc-cta__inner reveal-up"><h2>تريد هذا النوع من التفكير على علامتك؟</h2><a href="start-project-ar.html" class="btn btn--solid btn--lg" data-cursor="hover" data-magnetic><span>ابدأ مشروعك</span></a></div>
+    </div>
+  </main>
+  <footer class="footer" aria-label="التذييل">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="الهوك" style="--logo-h:30px"/>
+        <div class="footer__word">الهوك — <strong>استراتيجية وتصميم</strong></div>
+        <p>نلتقط الانتباه، ونصل إلى القلب. — البحرين والسعودية</p>
+      </div>
+      <nav class="footer__nav" aria-label="تذييل">
+        <div><h4>الاستوديو</h4><a href="services-ar.html" data-cursor="hover">خدماتنا</a><a href="work-ar.html" data-cursor="hover">أعمالنا</a><a href="index-ar.html#why" data-cursor="hover">لماذا نحن</a></div>
+        <div><h4>الشركة</h4><a href="team-ar.html" data-cursor="hover">الفريق</a><a href="journal-ar.html" data-cursor="hover">المدوّنة</a><a href="index.html" hreflang="en" data-cursor="hover">English</a></div>
+        <div><h4>تواصل</h4><a href="https://www.instagram.com/thehookstrategies" target="_blank" rel="noopener" data-cursor="hover">إنستغرام ↗</a><a href="mailto:hello@thehookstrategy.com" data-cursor="hover">البريد</a></div>
+      </nav>
+    </div>
+    <div class="footer__bottom"><span>© <span id="year"></span> الهوك (The Hook). جميع الحقوق محفوظة.</span><span class="footer__made">صُنع في البحرين · بحبٍّ من قلب الخليج.</span></div>
+    <div class="footer__big" aria-hidden="true"><img src="assets/brand/logo-wordmark-neon.png" alt="الهوك" width="2052" height="377" loading="lazy" decoding="async" /></div>
+  </footer>
+  <script type="module" src="assets/js/main.js?v=17"></script>
+</body>
+</html>
