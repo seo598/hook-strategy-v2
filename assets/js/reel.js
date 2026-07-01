@@ -27,14 +27,14 @@ function isWebGLBlocked() {
    brand greens/lime, with a warm gold moment for the Dear Gold chapter. */
 const CHAPTERS = [
   { id: 'reel-intro',          a: 0x084424, c: 0xd8f404 },
-  { id: 'reel-fahdan',         a: 0x084424, c: 0xd8f404 },
-  { id: 'reel-multiform',      a: 0x0a2c18, c: 0x7cffb2 },
-  { id: 'reel-amazingbahrain', a: 0x0a2c18, c: 0xfccc00 },
-  { id: 'reel-startupnest',    a: 0x084424, c: 0xd8f404 },
-  { id: 'reel-businesshub',    a: 0x0a2c18, c: 0x30cc64 },
-  { id: 'reel-deargold',       a: 0x1a1206, c: 0xf4c95d },
-  { id: 'reel-makkan',         a: 0x084424, c: 0xd8f404 },
-  { id: 'reel-propertyhub',    a: 0x0a2c18, c: 0x6de0c8 },
+  { id: 'reel-fact-audience',  a: 0x084424, c: 0xd8f404 },
+  { id: 'reel-fact-time',      a: 0x0a2c18, c: 0x7cffb2 },
+  { id: 'reel-fact-hook',      a: 0x0a2c18, c: 0xfccc00 },
+  { id: 'reel-fact-video',     a: 0x084424, c: 0xd8f404 },
+  { id: 'reel-fact-discovery', a: 0x0a2c18, c: 0x30cc64 },
+  { id: 'reel-fact-trust',     a: 0x0a2c18, c: 0x6de0c8 },
+  { id: 'reel-fact-tiktok',    a: 0x084424, c: 0xd8f404 },
+  { id: 'reel-fact-community', a: 0x0a2c18, c: 0x7cffb2 },
   { id: 'reel-outro',          a: 0x084424, c: 0xd8f404 },
 ];
 const N = CHAPTERS.length;
