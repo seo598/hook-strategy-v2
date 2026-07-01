@@ -192,9 +192,11 @@ function init(canvas) {
   hookMesh.position.sub(hookCenter);
   fishingLine.position.sub(hookCenter);
 
-  orb.scale.setScalar(1.15);
-  orb.position.x = isMobile ? 0 : 2.3;
-  orb.position.y = isMobile ? 1.7 : 0.35;
+  // On phones the portrait viewport makes the hook fill the screen + bloom
+  // floods green — keep it a small upper accent instead of a backdrop.
+  orb.scale.setScalar(isMobile ? 0.62 : 1.15);
+  orb.position.x = isMobile ? 0.3 : 2.3;
+  orb.position.y = isMobile ? 1.85 : 0.35;
   scene.add(orb);
 
   // ---- particles ----
@@ -227,7 +229,7 @@ function init(canvas) {
   // ---- post ----
   const composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
-  const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), isMobile ? 0.26 : 0.32, 0.5, 0.72);
+  const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), isMobile ? 0.18 : 0.32, 0.5, 0.72);
   composer.addPass(bloom);
 
   // cinematic grade: chromatic aberration at the edges + vignette + film grain
@@ -353,16 +355,16 @@ function init(canvas) {
     // scroll handoff: the orb recedes, shrinks and dissolves as the next
     // section rises — hero → statement reads as one continuous camera move
     const handoff = THREE.MathUtils.smoothstep(sp, 0.0, 1.0);
-    const oScale = 1.15 * (1.0 - handoff * 0.45);
+    const oScale = (isMobile ? 0.62 : 1.15) * (1.0 - handoff * 0.45);
     orb.scale.setScalar(oScale);
     orbMat.uniforms.uFade.value = 1.0 - handoff * 0.85;
 
     // the hook tracks the cursor across the hero. Drive it from the RAW cursor
     // (target) with a single smoothing stage so it follows crisply instead of
     // lagging through two cascaded low-pass filters (mouse.lerp → position.lerp).
-    const baseX = isMobile ? 0 : 0.4;
-    const baseY = isMobile ? (isTouch ? 1.7 : 0.6) : 0.15;
-    const rangeX = isTouch ? 0.6 : 3.0, rangeY = isTouch ? 0.6 : 2.0;
+    const baseX = isMobile ? 0.3 : 0.4;
+    const baseY = isMobile ? (isTouch ? 1.85 : 1.3) : 0.15;
+    const rangeX = isTouch ? 0.45 : 3.0, rangeY = isTouch ? 0.4 : 2.0;
     const followX = baseX + target.x * rangeX;
     const followY = baseY + target.y * rangeY - sp * 1.2;
     orb.position.x += (followX - orb.position.x) * 0.14;
