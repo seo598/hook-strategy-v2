@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark" class="no-js">
+<head>
+  <meta charset="UTF-8"/>
+  <script>document.documentElement.classList.remove('no-js');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="color-scheme" content="dark"/>
+  <meta name="theme-color" content="#06170D"/>
+  <title>العبور — حكايةٌ تفاعلية من الهوك</title>
+  <meta name="description" content="حكايةٌ تفاعلية تعبُرها بالصوت — العبور الذي تقطعه كل علامة، من التيه إلى أرضٍ جديدةٍ تنمو. من الهوك، وكالة تسويق وإبداع في البحرين والسعودية."/>
+  <link rel="canonical" href="https://www.thehookstrategy.com/experience-ar.html"/>
+  <link rel="alternate" hreflang="en" href="https://www.thehookstrategy.com/experience.html"/>
+  <link rel="alternate" hreflang="ar" href="https://www.thehookstrategy.com/experience-ar.html"/>
+  <meta name="robots" content="index, follow"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="The Hook — الهوك"/>
+  <meta property="og:locale" content="ar_BH"/>
+  <meta property="og:title" content="العبور — حكايةٌ تفاعلية من الهوك"/>
+  <meta property="og:description" content="اضغط مطوّلاً لتعبُر حكايتنا، بالصوت — من التيه، إلى الفكرة الواحدة، إلى أرضٍ جديدةٍ تنمو."/>
+  <meta property="og:url" content="https://www.thehookstrategy.com/experience-ar.html"/>
+  <meta property="og:image" content="https://www.thehookstrategy.com/assets/img/og.jpg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" media="print" onload="this.media='all'"/>
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap"/></noscript>
+  <link rel="stylesheet" href="assets/css/style.css?v=42"/>
+  <link rel="icon" type="image/png" sizes="256x256" href="assets/brand/favicon-256.png"/>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebPage","name":"العبور — حكايةٌ تفاعلية من الهوك","url":"https://www.thehookstrategy.com/experience-ar.html","inLanguage":"ar","description":"حكايةٌ تفاعلية تعبُرها، من التيه إلى أرضٍ جديدةٍ تنمو — حكاية الهوك.","publisher":{"@type":"Organization","name":"The Hook","url":"https://www.thehookstrategy.com/"}}
+  </script>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js" crossorigin fetchpriority="low" />
+  <link rel="modulepreload" href="assets/js/experience.js?v=4" fetchpriority="low" />
+  <!-- hook-perf-v1 : perf resource hints + instant nav -->
+  <link rel="modulepreload" href="https://esm.sh/gsap@3.12.5" crossorigin fetchpriority="low" />
+  <link rel="modulepreload" href="https://esm.sh/gsap@3.12.5/ScrollTrigger" crossorigin fetchpriority="low" />
+  <link rel="modulepreload" href="https://esm.sh/lenis@1.1.14" crossorigin fetchpriority="low" />
+  <script type="speculationrules">
+  {"prefetch":[{"source":"document","eagerness":"moderate","where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"[target=_blank]"}},{"not":{"selector_matches":"[rel~=external]"}}]}}]}
+  </script>
+</head>
+<body class="xp-body">
+  <a class="skip-link" href="#xp-story">تخطَّ إلى نص الحكاية</a>
+  <div class="cursor" id="cursor" aria-hidden="true"><div class="cursor__dot"></div><div class="cursor__ring"></div><span class="cursor__label"></span></div>
+
+  <main class="xp" id="xp">
+    <canvas id="xp-canvas" aria-hidden="true"></canvas>
+
+    <!-- Start gate (also unlocks audio via user gesture) -->
+    <div class="xp-gate" id="xp-gate">
+      <div class="xp-gate__inner">
+        <picture><source type="image/webp" srcset="assets/brand/logo-wordmark-neon.webp"><img class="logo-img xp-gate__logo" src="assets/brand/logo-wordmark-neon.png" alt="الهوك" decoding="async" width="150" height="28" style="--logo-h:28px" /></picture>
+        <p class="xp-gate__eyebrow">حكايةٌ تفاعلية</p>
+        <h1 class="xp-gate__title">العبور.</h1>
+        <p class="xp-gate__lede">أربعة فصول، وأجملها بالصوت. اضغط&nbsp;مطوّلاً لتُبحر — وأفلِت لترسو عند كل شاطئ.</p>
+        <div class="xp-gate__actions">
+          <button type="button" class="btn btn--solid btn--lg" id="xp-enter-sound" data-cursor="hover" data-magnetic><span>ابدأ بالصوت</span></button>
+          <button type="button" class="btn btn--ghost" id="xp-enter-silent" data-cursor="hover" data-magnetic><span>ابدأ بصمت</span></button>
+        </div>
+        <p class="xp-gate__loading" id="xp-loading">نرسم مسار العبور… <span id="xp-loading-pct">0</span>٪</p>
+        <p class="xp-gate__note"><a href="index-ar.html" data-cursor="hover">← العودة إلى thehookstrategy.com</a> · <a href="experience.html" hreflang="en" data-cursor="hover">EN</a></p>
+      </div>
+    </div>
+
+    <!-- Minimal chrome -->
+    <header class="xp-chrome" id="xp-chrome" hidden>
+      <a class="xp-home" href="index-ar.html" aria-label="الهوك — الرئيسية" data-cursor="hover">
+        <picture><source type="image/webp" srcset="assets/brand/logo-wordmark-neon.webp"><img class="logo-img" src="assets/brand/logo-wordmark-neon.png" alt="الهوك" decoding="async" width="96" height="18" style="--logo-h:18px" /></picture>
+      </a>
+      <div class="xp-progress" aria-hidden="true"><span id="xp-progress-fill"></span></div>
+      <div class="xp-chrome__right">
+        <button type="button" class="xp-sound" id="xp-sound" data-cursor="hover" aria-pressed="true" aria-label="تبديل الصوت">
+          <span class="xp-sound__bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span class="xp-sound__label">الصوت</span>
+        </button>
+        <a class="xp-exit" href="work-ar.html" data-cursor="hover" aria-label="الخروج إلى الأعمال">خروج <span aria-hidden="true">✕</span></a>
+      </div>
+    </header>
+
+    <!-- Chapter dot nav -->
+    <nav class="xp-dots" id="xp-dots" aria-label="الفصول" hidden></nav>
+
+    <!-- Narrative overlays (one per chapter) -->
+    <div class="xp-story" id="xp-story" tabindex="-1" aria-live="polite">
+      <article class="xp-chapter is-active" data-ch="0">
+        <p class="xp-chapter__num">01 / 04 — المياه المفتوحة</p>
+        <h2 class="xp-chapter__line">كل علامةٍ تبدأ تائهة — ضوءٌ وحيد على بحرٍ واسعٍ مظلم.</h2>
+        <p class="xp-chapter__sub">الانتباه وحده تيّارٌ يقوى على حملها إلى مكان.</p>
+      </article>
+      <article class="xp-chapter" data-ch="1">
+        <p class="xp-chapter__num">02 / 04 — الشرارة</p>
+        <h2 class="xp-chapter__line">فنمضي بحثاً عن الفكرة الواحدة الصادقة. الخطّاف.</h2>
+        <p class="xp-chapter__sub">حادّةٌ تكفي لتخترق الضجيج. صادقةٌ تكفي لتبقى.</p>
+      </article>
+      <article class="xp-chapter" data-ch="2">
+        <p class="xp-chapter__num">03 / 04 — العبور</p>
+        <h2 class="xp-chapter__line">الفكرة الجيّدة لا تُبحر وحدها؛ إنّها تجمع قبيلة.</h2>
+        <p class="xp-chapter__sub">من جزيرةٍ إلى جزيرة تنتشر الحكاية — حتى يصير الجمهور هو الراوي.</p>
+      </article>
+      <article class="xp-chapter" data-ch="3">
+        <p class="xp-chapter__num">04 / 04 — أرضٌ جديدة</p>
+        <h2 class="xp-chapter__line">وكلّ عبورٍ يرسو في أرضٍ جديدة.<br>أرضٍ تنمو.</h2>
+        <p class="xp-chapter__sub">نحن «الهوك». نلتقط الانتباه، ونصل إلى القلب.</p>
+        <div class="xp-actions">
+          <a href="start-project-ar.html" class="btn btn--solid btn--lg" data-cursor="hover" data-magnetic><span>ابدأ مشروعك</span></a>
+          <a href="work-ar.html" class="btn btn--ghost" data-cursor="hover" data-magnetic><span>شاهد أعمالنا</span><i class="arrow">←</i></a>
+        </div>
+        <button type="button" class="xp-replay" id="xp-replay" data-cursor="hover">↺ اعبُر من جديد</button>
+      </article>
+    </div>
+
+    <!-- Advance hint -->
+    <div class="xp-hint" id="xp-hint" hidden aria-hidden="true">
+      اضغط <span class="xp-hint__key">مطوّلاً</span> لتُبحر — أو <span class="xp-hint__key">المسافة</span>
+    </div>
+  </main>
+
+  <noscript>
+    <div class="xp-noscript">
+      <p>هذه حكايةٌ تفاعلية تحتاج إلى جافاسكربت. شاهد <a href="work-ar.html">أعمالنا</a> أو <a href="index-ar.html">الصفحة الرئيسية</a> بدلاً من ذلك.</p>
+    </div>
+  </noscript>
+
+  <script type="module" src="assets/js/experience.js?v=4"></script>
+</body>
+</html>
