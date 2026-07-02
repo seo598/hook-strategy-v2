@@ -6,16 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <meta name="color-scheme" content="dark"/>
   <meta name="theme-color" content="#06170D"/>
-  <title>The Crossing — an interactive tale by Hook Strategy</title>
-  <meta name="description" content="An interactive tale you travel through with sound — the crossing every brand makes, from adrift to a growing new land. From The Hook, a creative marketing agency in Bahrain &amp; KSA."/>
+  <title>The Grove — an interactive garden by The Hook</title>
+  <meta name="description" content="A playable garden where every project grows like a seed. Plant an idea, grow its roots, water it, give it light and wind — then harvest the growth. From The Hook, Bahrain &amp; KSA."/>
   <link rel="canonical" href="https://www.thehookstrategy.com/experience.html"/>
   <link rel="alternate" hreflang="en" href="https://www.thehookstrategy.com/experience.html"/>
   <link rel="alternate" hreflang="ar" href="https://www.thehookstrategy.com/experience-ar.html"/>
   <meta name="robots" content="index, follow"/>
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="Hook Strategy"/>
-  <meta property="og:title" content="The Crossing — an interactive tale by Hook Strategy"/>
-  <meta property="og:description" content="Press and hold to travel through our story, with sound — from adrift, to the one idea, to a growing new land."/>
+  <meta property="og:title" content="The Grove — an interactive garden by The Hook"/>
+  <meta property="og:description" content="Plant an idea. Grow the roots, bring the rain, the light, the wind — and pick the growth yourself. A playable brand story."/>
   <meta property="og:url" content="https://www.thehookstrategy.com/experience.html"/>
   <meta property="og:image" content="https://www.thehookstrategy.com/assets/img/og.jpg"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -24,10 +24,10 @@
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"/>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'"/>
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"/></noscript>
-  <link rel="stylesheet" href="assets/css/style.css?v=42"/>
+  <link rel="stylesheet" href="assets/css/style.css?v=43"/>
   <link rel="icon" type="image/png" sizes="256x256" href="assets/brand/favicon-256.png"/>
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"WebPage","name":"The Crossing — an interactive tale by Hook Strategy","url":"https://www.thehookstrategy.com/experience.html","description":"An interactive tale you travel through, from adrift to a growing new land — the story of The Hook.","publisher":{"@type":"Organization","name":"Hook Strategy","url":"https://www.thehookstrategy.com/"}}
+  {"@context":"https://schema.org","@type":"WebPage","name":"The Grove — an interactive garden by The Hook","url":"https://www.thehookstrategy.com/experience.html","description":"A playable garden where every project grows like a seed — plant it, root it, water it, light it, spread it, harvest it.","publisher":{"@type":"Organization","name":"Hook Strategy","url":"https://www.thehookstrategy.com/"}}
   </script>
 
   <script type="importmap">
@@ -39,11 +39,7 @@
   }
   </script>
   <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js" crossorigin fetchpriority="low" />
-  <link rel="modulepreload" href="assets/js/experience.js?v=4" fetchpriority="low" />
-  <!-- hook-perf-v1 : perf resource hints + instant nav -->
-  <link rel="modulepreload" href="https://esm.sh/gsap@3.12.5" crossorigin fetchpriority="low" />
-  <link rel="modulepreload" href="https://esm.sh/gsap@3.12.5/ScrollTrigger" crossorigin fetchpriority="low" />
-  <link rel="modulepreload" href="https://esm.sh/lenis@1.1.14" crossorigin fetchpriority="low" />
+  <link rel="modulepreload" href="assets/js/grove.js?v=2" fetchpriority="low" />
   <script type="speculationrules">
   {"prefetch":[{"source":"document","eagerness":"moderate","where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"[target=_blank]"}},{"not":{"selector_matches":"[rel~=external]"}}]}}]}
   </script>
@@ -59,15 +55,15 @@
     <div class="xp-gate" id="xp-gate">
       <div class="xp-gate__inner">
         <picture><source type="image/webp" srcset="assets/brand/logo-wordmark-neon.webp"><img class="logo-img xp-gate__logo" src="assets/brand/logo-wordmark-neon.png" alt="The Hook" decoding="async" width="150" height="28" style="--logo-h:28px" /></picture>
-        <p class="xp-gate__eyebrow">An interactive tale</p>
-        <h1 class="xp-gate__title">the crossing.</h1>
-        <p class="xp-gate__lede">Four chapters, best with sound. Press&nbsp;and&nbsp;hold to travel — release to rest at each shore.</p>
+        <p class="xp-gate__eyebrow">An interactive garden</p>
+        <h1 class="xp-gate__title">the grove.</h1>
+        <p class="xp-gate__lede">Every project grows like a seed. Plant one — then give it roots, water, light and wind, and pick the growth with your own hands. Six little acts, best with sound.</p>
         <div class="xp-gate__actions">
           <button type="button" class="btn btn--solid btn--lg" id="xp-enter-sound" data-cursor="hover" data-magnetic><span>Begin with sound</span></button>
           <button type="button" class="btn btn--ghost" id="xp-enter-silent" data-cursor="hover" data-magnetic><span>Begin in silence</span></button>
         </div>
-        <p class="xp-gate__loading" id="xp-loading">Charting the crossing… <span id="xp-loading-pct">0</span>%</p>
-        <p class="xp-gate__note"><a href="index.html" data-cursor="hover">← Back to thehookstrategy.com</a></p>
+        <p class="xp-gate__loading" id="xp-loading">Preparing the soil… <span id="xp-loading-pct">0</span>%</p>
+        <p class="xp-gate__note"><a href="index.html" data-cursor="hover">← Back to thehookstrategy.com</a> · <a href="experience-ar.html" hreflang="ar" lang="ar" data-cursor="hover">العربية</a></p>
       </div>
     </div>
 
@@ -86,50 +82,65 @@
       </div>
     </header>
 
-    <!-- Chapter dot nav -->
-    <nav class="xp-dots" id="xp-dots" aria-label="Chapters" hidden></nav>
+    <!-- Stage dot nav (built by JS) -->
+    <nav class="xp-dots" id="xp-dots" aria-label="Stages" hidden></nav>
 
-    <!-- Narrative overlays (one per chapter) -->
+    <!-- Stage overlays (one per stage) -->
     <div class="xp-story" id="xp-story" tabindex="-1" aria-live="polite">
       <article class="xp-chapter is-active" data-ch="0">
-        <p class="xp-chapter__num">01 / 04 — Open water</p>
-        <h2 class="xp-chapter__line">Every brand begins adrift — a single light on a wide, dark sea.</h2>
-        <p class="xp-chapter__sub">Attention is the only current strong enough to carry it somewhere.</p>
+        <p class="xp-chapter__num">01 / 06 — The seed</p>
+        <h2 class="xp-chapter__line">Every great brand begins the same way: a seed someone dared to plant.</h2>
+        <p class="xp-chapter__sub">Your idea is the seed. Plant it.</p>
       </article>
       <article class="xp-chapter" data-ch="1">
-        <p class="xp-chapter__num">02 / 04 — The spark</p>
-        <h2 class="xp-chapter__line">So we go looking for the one true idea. The hook.</h2>
-        <p class="xp-chapter__sub">Sharp enough to cut through the noise. Honest enough to hold.</p>
+        <p class="xp-chapter__num">02 / 06 — The roots · strategy</p>
+        <h2 class="xp-chapter__line">Strategy is the roots — unseen, unglamorous, holding up everything.</h2>
+        <p class="xp-chapter__sub">Before anyone sees a brand, it has to grip the ground.</p>
       </article>
       <article class="xp-chapter" data-ch="2">
-        <p class="xp-chapter__num">03 / 04 — The crossing</p>
-        <h2 class="xp-chapter__line">A good idea never travels alone. It gathers a tribe.</h2>
-        <p class="xp-chapter__sub">Island to island the story spreads — until the audience becomes the storyteller.</p>
+        <p class="xp-chapter__num">03 / 06 — The water · content</p>
+        <h2 class="xp-chapter__line">Content is the water. Not a flood — a rhythm.</h2>
+        <p class="xp-chapter__sub">Consistency beats volume, in every season.</p>
       </article>
       <article class="xp-chapter" data-ch="3">
-        <p class="xp-chapter__num">04 / 04 — New land</p>
-        <h2 class="xp-chapter__line">And every crossing lands somewhere new.<br>Somewhere growing.</h2>
-        <p class="xp-chapter__sub">We're The Hook. Where great ideas take bait.</p>
-        <div class="xp-actions">
-          <a href="start-project.html" class="btn btn--solid btn--lg" data-cursor="hover" data-magnetic><span>Start a project</span></a>
-          <a href="work.html" class="btn btn--ghost" data-cursor="hover" data-magnetic><span>See our work</span><i class="arrow">→</i></a>
+        <p class="xp-chapter__num">04 / 06 — The light · performance</p>
+        <h2 class="xp-chapter__line">Performance is sunlight: focused energy, aimed exactly where it matters.</h2>
+        <p class="xp-chapter__sub">Ads don’t shout. They shine.</p>
+      </article>
+      <article class="xp-chapter" data-ch="4">
+        <p class="xp-chapter__num">05 / 06 — The wind · social</p>
+        <h2 class="xp-chapter__line">Social is the wind. It carries your story to gardens you’ve never visited.</h2>
+        <p class="xp-chapter__sub">Until strangers start planting it for you.</p>
+      </article>
+      <article class="xp-chapter" data-ch="5">
+        <p class="xp-chapter__num">06 / 06 — The harvest · growth</p>
+        <h2 class="xp-chapter__line">And then — growth you can pick with your hands.</h2>
+        <p class="xp-chapter__sub">We’re The Hook. We plant ideas and grow them into brands people love.</p>
+        <div class="grove-stats" aria-label="What growing looks like">
+          <span class="grove-stat"><b data-to="500" data-dec="0">0</b>K+ views</span>
+          <span class="grove-stat"><b data-to="2.5" data-dec="1">0</b>× engagement</span>
+          <span class="grove-stat"><b data-to="18" data-dec="0">0</b> brands growing</span>
         </div>
-        <button type="button" class="xp-replay" id="xp-replay" data-cursor="hover">↺ Make the crossing again</button>
+        <div class="xp-actions">
+          <a href="start-project.html" class="btn btn--solid btn--lg" data-cursor="hover" data-magnetic><span>Plant your project</span></a>
+          <a href="work.html" class="btn btn--ghost" data-cursor="hover" data-magnetic><span>See what we’ve grown</span><i class="arrow">→</i></a>
+        </div>
+        <button type="button" class="xp-replay" id="xp-replay" data-cursor="hover">↺ Plant another seed</button>
       </article>
     </div>
 
-    <!-- Advance hint -->
-    <div class="xp-hint" id="xp-hint" hidden aria-hidden="true">
-      press &amp; <span class="xp-hint__key">hold</span> to travel — or <span class="xp-hint__key">space</span>
+    <!-- Action hint (text swapped per stage by JS; announced to screen readers) -->
+    <div class="xp-hint" id="xp-hint" hidden aria-live="polite">
+      tap the <span class="xp-hint__key">soil</span> to plant your idea
     </div>
   </main>
 
   <noscript>
     <div class="xp-noscript">
-      <p>This is an interactive tale that needs JavaScript. See our <a href="work.html">work</a> or <a href="index.html">homepage</a> instead.</p>
+      <p>This is a playable garden that needs JavaScript. See our <a href="work.html">work</a> or <a href="index.html">homepage</a> instead.</p>
     </div>
   </noscript>
 
-  <script type="module" src="assets/js/experience.js?v=4"></script>
+  <script type="module" src="assets/js/grove.js?v=2"></script>
 </body>
 </html>
