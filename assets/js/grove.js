@@ -89,10 +89,19 @@ scene.add(rim);
 
 /* ---------- island ---------- */
 const world = new THREE.Group(); scene.add(world);
-const isle = new THREE.Mesh(new THREE.CylinderGeometry(3.4, 2.1, 1.15, 10, 1), toon(C.soil));
+// transparent-capable so the soil can turn into a cutaway during the roots stage
+const isle = new THREE.Mesh(new THREE.CylinderGeometry(3.4, 2.1, 1.15, 12, 1), toon(C.soil, { transparent: true }));
 isle.position.y = -0.58; world.add(isle);
-const mound = new THREE.Mesh(new THREE.SphereGeometry(0.55, 8, 6), toon(C.soilDark));
+const mound = new THREE.Mesh(new THREE.SphereGeometry(0.55, 10, 8), toon(C.soilDark, { transparent: true }));
 mound.scale.set(1, 0.32, 1); mound.position.y = 0.02; world.add(mound);
+// soil fade helper (cutaway ↔ solid) — depthWrite off while translucent so roots show through
+function fadeSoil(to) {
+  [isle, mound].forEach((m) => {
+    m.material.transparent = true; m.material.depthWrite = to > 0.7;
+    const from = m.material.opacity;
+    animate(0.7, (k) => { m.material.opacity = from + (to - from) * k; });
+  });
+}
 for (let i = 0; i < 14; i++) { // grass tufts
   const g = new THREE.Mesh(new THREE.ConeGeometry(0.045, 0.22 + Math.random() * 0.18, 4), toon(C.grass));
   const a = Math.random() * Math.PI * 2, r = 1.1 + Math.random() * 1.9;
@@ -113,17 +122,60 @@ for (const s of [-1, 1]) {
   leaf.position.set(0.09 * s, 0.3, 0); leaf.rotation.z = s * -1.1; sprout.add(leaf);
 }
 
-/* ---------- roots (underground) ---------- */
+/* ---------- roots (underground; drawn on as they grow, with glowing tips) ---------- */
 const rootsGroup = new THREE.Group(); world.add(rootsGroup);
-const rootMat = toon(C.root, { emissive: 0x556b2f, emissiveIntensity: 0.25 });
+const rootMat = new THREE.MeshToonMaterial({ color: 0xcfe89a, gradientMap: gradTex, emissive: 0x66a636, emissiveIntensity: 0.5 });
+const tipMat = new THREE.MeshBasicMaterial({ color: 0xeaff7a });
 const ROOTS = [];
+const NROOT = isMobile ? 6 : 9;
+for (let i = 0; i < NROOT; i++) {
+  let ang = (i / NROOT) * Math.PI * 2 + 0.2 + Math.random() * 0.3;
+  const len = 1.0 + Math.random() * 1.0, depth = 0.7 + Math.random() * 0.35, rad = 0.028 + Math.random() * 0.02;
+  const pts = [new THREE.Vector3(0, -0.02, 0)];
+  for (let s = 1; s <= 5; s++) {
+    const f = s / 5; ang += (Math.random() - 0.5) * 0.7;
+    pts.push(new THREE.Vector3(Math.cos(ang) * len * f, -0.06 - depth * f * f, Math.sin(ang) * len * f));
+  }
+  const curve = new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.5);
+  const geo = new THREE.TubeGeometry(curve, 46, rad, 5, false);
+  geo.setDrawRange(0, 0);
+  const mesh = new THREE.Mesh(geo, rootMat); mesh.renderOrder = 1; rootsGroup.add(mesh);
+  const tip = new THREE.Mesh(new THREE.SphereGeometry(rad * 2.6, 8, 6), tipMat); tip.visible = false; tip.renderOrder = 2; rootsGroup.add(tip);
+  ROOTS.push({ geo, mesh, tip, curve, idx: geo.index.count, speed: 0.72 + Math.random() * 0.5 });
+}
+// pulsing "charge" ring at the base while holding to grow
+const chargeRing = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.016, 8, 30),
+  new THREE.MeshBasicMaterial({ color: 0xd8f404, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false }));
+chargeRing.rotation.x = Math.PI / 2; chargeRing.position.y = 0.04; chargeRing.renderOrder = 3; world.add(chargeRing);
+// nutrient nodes the roots reach toward and absorb
+const NODES = [];
 for (let i = 0; i < 8; i++) {
-  const a = (i / 8) * Math.PI * 2 + 0.3;
-  const end = new THREE.Vector3(Math.cos(a) * (1.1 + Math.random() * 0.7), -1.7 - Math.random() * 0.7, Math.sin(a) * (1.1 + Math.random() * 0.7));
-  const mid = end.clone().multiplyScalar(0.45); mid.y = -0.7 - Math.random() * 0.3;
-  const curve = new THREE.CatmullRomCurve3([new THREE.Vector3(0, -0.05, 0), mid, end]);
-  const tube = new THREE.Mesh(new THREE.TubeGeometry(curve, 10, 0.035, 5, false), rootMat);
-  tube.scale.setScalar(0.001); rootsGroup.add(tube); ROOTS.push(tube);
+  const a = Math.random() * Math.PI * 2, r = 0.7 + Math.random() * 1.4, y = -0.35 - Math.random() * 0.85;
+  const m = new THREE.Mesh(new THREE.SphereGeometry(0.05, 8, 6),
+    new THREE.MeshBasicMaterial({ color: 0x9fe0ff, transparent: true, opacity: 0 }));
+  m.position.set(Math.cos(a) * r, y, Math.sin(a) * r); m.renderOrder = 2; world.add(m);
+  NODES.push({ mesh: m, pos: m.position.clone(), absorbed: false });
+}
+function absorbNode(nd) {
+  nd.absorbed = true;
+  animate(0.4, (k) => { nd.mesh.scale.setScalar(Math.max(0.001, 1 + k * 1.5)); nd.mesh.material.opacity = 0.9 * (1 - k); }, easeOutCubic, () => { nd.mesh.visible = false; });
+  spawnBurst(nd.pos, 6, 0.5); plink();
+}
+// keeps the drawn length + tip positions + node absorption in sync with stageP (stage 1)
+function updateRoots() {
+  for (const R of ROOTS) {
+    const r = Math.min(1, stageP * R.speed);
+    R.geo.setDrawRange(0, Math.floor((R.idx * r) / 3) * 3);
+    if (r > 0.015) { R.tip.visible = true; R.curve.getPoint(Math.min(1, r), R.tip.position); }
+    else R.tip.visible = false;
+  }
+  for (const nd of NODES) {
+    if (nd.absorbed) continue;
+    if (nd.mesh.material.opacity < 0.85) nd.mesh.material.opacity = Math.min(0.85, nd.mesh.material.opacity + 0.04);
+    for (const R of ROOTS) {
+      if (R.tip.visible && R.tip.position.distanceTo(nd.pos) < 0.26) { absorbNode(nd); break; }
+    }
+  }
 }
 
 /* ---------- tree ---------- */
@@ -374,7 +426,7 @@ function setStats(frac) {
 /* camera targets per stage (+ gate orbit) */
 const CAMS = [
   { p: [0.9, 1.15, 3.3], l: [0, 0.3, 0] },     // seed
-  { p: [0.4, -1.2, 3.6], l: [0, -0.9, 0] },    // roots
+  { p: [2.15, 0.05, 3.7], l: [0, -0.62, 0] },  // roots — low 3/4 into the soil cutaway
   { p: [1.5, 1.8, 4.8], l: [0, 1.1, 0] },      // rain
   { p: [-1.7, 1.9, 5.2], l: [0, 1.35, 0] },    // sun
   { p: [0.2, 2.3, 6.4], l: [0, 1.5, 0] },      // wind
@@ -405,6 +457,7 @@ function setStage(i) {
   if (hint) { hint.innerHTML = RM ? STR.rmHint : STR.hints[i]; hint.hidden = false; }
   setCamStage(i);
   // stage entries
+  if (i === 1) { fadeSoil(0.28); } // open the soil into a cutaway so roots are visible
   if (i === 2) { cloud.visible = true; cloud.scale.setScalar(0.001); popIn(cloud, 1, 0.7); }
   if (i === 3) { sun.visible = true; beam.visible = true; }
   if (i === 4) { windMat.opacity = 0; }
@@ -437,8 +490,15 @@ function applyEndState(i) {
   }
   if (i === 1 && !grown.roots) {
     grown.roots = true;
-    ROOTS.forEach((r) => { if (r.scale.x < 1) animate(0.5, (k) => r.scale.setScalar(Math.max(r.scale.x, k)), easeOutCubic); });
-    // sapling
+    // fully draw every root, absorb any nutrients still in the soil, then flash
+    ROOTS.forEach((R) => { R.geo.setDrawRange(0, R.idx); R.curve.getPoint(1, R.tip.position); R.tip.visible = true; });
+    NODES.forEach((nd) => { if (!nd.absorbed) absorbNode(nd); });
+    animate(0.8, (k) => { rootMat.emissiveIntensity = 0.5 + Math.sin(k * Math.PI) * 1.1; }); // energy pulse
+    spawnBurst(new THREE.Vector3(0, -0.1, 0), 20, 1.3);
+    chargeRing.material.opacity = 0;
+    fadeSoil(1); // close the cutaway back up solid, focus returns to the surface
+    setTimeout(() => ROOTS.forEach((R) => { R.tip.visible = false; }), 900);
+    // sapling shoots up from the now-rooted base
     trunk.visible = true;
     animate(1.1, (k) => { trunk.scale.y = Math.max(trunk.scale.y, 0.001 + 0.34 * k); }, easeOutCubic);
     animate(0.8, (k) => sprout.scale.setScalar(Math.max(0.001, 1 - k * 0.999)));
@@ -678,12 +738,8 @@ function frame() {
 
   /* stage mechanics */
   if (started && !advancing && !finished && !RM) {
-    if (stage === 1 && isHolding()) { // roots: hold to grow
-      stageP = Math.min(1, stageP + dt / 2.6);
-      const upto = Math.floor(stageP * ROOTS.length);
-      ROOTS.forEach((r, i) => {
-        if (i < upto && r.scale.x < 1) r.scale.setScalar(Math.min(1, r.scale.x + dt * 3));
-      });
+    if (stage === 1 && isHolding()) { // roots: hold to grow strategy underground
+      stageP = Math.min(1, stageP + dt / 3.0);
       if (stageP >= 1) completeStage();
     }
     if (stage === 3) { // sun: hold to shine
@@ -711,6 +767,21 @@ function frame() {
       if (sporesLanded >= 6) { stageP = 1; completeStage(); }
     }
     syncHud(); // keep the progress bar live during hold/wind accrual
+  }
+
+  /* roots visuals — reveal length + tips + node absorption track stageP */
+  if (stage === 1 && !grown.roots) {
+    updateRoots();
+    const cr = chargeRing.material;
+    if (isHolding() && !advancing) {
+      cr.opacity = 0.35 + (Math.sin(t * 9) * 0.5 + 0.5) * 0.4;
+      chargeRing.scale.setScalar(0.55 + stageP * 0.9);
+      chargeRing.rotation.z += dt * 1.6;
+      // glowing root tips throb while charging
+      for (const R of ROOTS) if (R.tip.visible) R.tip.scale.setScalar(1 + Math.sin(t * 10) * 0.25);
+    } else {
+      cr.opacity = Math.max(0, cr.opacity - dt * 2.5);
+    }
   }
 
   /* wind visuals + decay (any stage, adds life) */
