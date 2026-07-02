@@ -70,7 +70,8 @@ renderer.setClearColor(skyCol, 1);
 const scene = new THREE.Scene();
 scene.fog = new THREE.FogExp2(0x06170d, 0.055);
 
-const camera = new THREE.PerspectiveCamera(46, 1, 0.1, 100);
+const BASE_FOV = 46, MOBILE_FOV = 62; // widen FOV on portrait phones (their horizontal FOV collapses)
+const camera = new THREE.PerspectiveCamera(BASE_FOV, 1, 0.1, 100);
 camera.position.set(0, 2.4, 7);
 
 /* toon gradient (3-step cel shading) */
@@ -254,7 +255,12 @@ function rainBurst() {
 /* ---------- sun + beam ---------- */
 const sun = new THREE.Mesh(new THREE.SphereGeometry(0.5, 12, 10),
   new THREE.MeshBasicMaterial({ color: C.gold }));
-sun.position.set(5.5, 0.2, -4); sun.visible = false; scene.add(sun);
+// Portrait phones have a very narrow horizontal FOV, so on mobile the sun starts
+// nearer/more-central and rises higher-and-inward to stay framed. Desktop keeps the
+// original path exactly.
+const SUN0 = isMobile ? new THREE.Vector3(2.6, 0.4, -3.2) : new THREE.Vector3(5.5, 0.2, -4);
+const SUN_RISE = isMobile ? new THREE.Vector3(-1.6, 4.2, 0.7) : new THREE.Vector3(-2.2, 4.1, 1.2);
+sun.position.copy(SUN0); sun.visible = false; scene.add(sun);
 const beam = new THREE.Mesh(new THREE.ConeGeometry(1.6, 7, 12, 1, true),
   new THREE.MeshBasicMaterial({ color: 0xfce77d, transparent: true, opacity: 0, side: THREE.DoubleSide, depthWrite: false, blending: THREE.AdditiveBlending }));
 beam.visible = false; scene.add(beam);
@@ -437,7 +443,11 @@ const camPosT = camPos.clone(), camLookT = camLook.clone();
 const pointerPar = new THREE.Vector2();
 
 function setCamStage(i) {
-  camPosT.fromArray(CAMS[i].p); camLookT.fromArray(CAMS[i].l);
+  // Stage-3 (sun) on portrait phones: pull the camera back + up so the higher,
+  // more-central mobile sun and the tree both stay in the narrow portrait frame.
+  let cam = CAMS[i];
+  if (i === 3 && isMobile && window.innerHeight > window.innerWidth) cam = { p: [-0.9, 2.4, 6.4], l: [0.3, 1.5, 0] };
+  camPosT.fromArray(cam.p); camLookT.fromArray(cam.l);
   if (RM) { camPos.copy(camPosT); camLook.copy(camLookT); }
 }
 
@@ -710,6 +720,9 @@ function resize() {
   const h = Math.max(1, canvas.clientHeight || window.innerHeight);
   renderer.setSize(w, h, false);
   composer.setSize(w, h);
+  // Recompute each resize/orientation change: portrait phones widen to MOBILE_FOV so
+  // the stage-3 sun isn't pushed off the (otherwise very narrow) horizontal frame.
+  camera.fov = (isMobile && h > w) ? MOBILE_FOV : BASE_FOV;
   camera.aspect = w / h; camera.updateProjectionMatrix();
 }
 resize();
@@ -846,7 +859,7 @@ function frame() {
   /* sun rise/shine */
   if (sun.visible) {
     const p = stage === 3 ? Math.max(stageP, sunP) : sunP;
-    sun.position.set(5.5 - p * 2.2, 0.2 + p * 4.1, -4 + p * 1.2);
+    sun.position.set(SUN0.x + p * SUN_RISE.x, SUN0.y + p * SUN_RISE.y, SUN0.z + p * SUN_RISE.z);
     sunLight.intensity = 0.25 + p * 1.15;
     sunLight.position.copy(sun.position);
     beam.position.copy(sun.position).lerp(_v.set(0, 1.6, 0), 0.5);

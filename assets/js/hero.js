@@ -69,7 +69,7 @@ void main(){
 
 const orbFrag = /* glsl */`
 precision highp float;
-uniform float uTime; uniform vec3 uA; uniform vec3 uB; uniform vec3 uC; uniform float uFade;
+uniform float uTime; uniform vec3 uA; uniform vec3 uB; uniform vec3 uC; uniform float uFade; uniform float uDesk;
 varying vec3 vNormal; varying vec3 vView; varying float vDisp;
 // thin-film-style iridescence: cheap cosine palette on the rim
 vec3 irid(float t){
@@ -77,7 +77,7 @@ vec3 irid(float t){
 }
 void main(){
   float ndv = max(dot(vNormal, vView), 0.0);
-  float fres = pow(1.0 - ndv, 3.0);
+  float fres = pow(1.0 - ndv, mix(3.0, 2.0, uDesk));
   float band = 0.5 + 0.5 * sin(vDisp * 9.0 + uTime * 0.8);
 
   // key + fill lighting so the form reads as a lit volume, not a flat blob
@@ -85,16 +85,16 @@ void main(){
   vec3 fillDir = normalize(vec3(-0.6, -0.2, 0.5));
   float key  = max(dot(vNormal, keyDir), 0.0);
   float fill = max(dot(vNormal, fillDir), 0.0);
-  float lit  = 0.30 + 0.85 * key + 0.18 * fill;
+  float lit  = mix(0.30, 0.45, uDesk) + 0.85 * key + 0.18 * fill;
 
   // a solid, visible forest-green body (reads as an object without bloom)...
   vec3 base = mix(uA, uB, band);
-  vec3 col = base * (0.34 + 0.55 * band) * lit;
+  vec3 col = base * (mix(0.34, 0.55, uDesk) + mix(0.55, 0.45, uDesk) * band) * lit;
 
   // ...with a restrained lime rim that shimmers into iridescence at glancing angles
   vec3 rimCol = mix(uC, uB, band);
   vec3 sheen  = mix(rimCol, irid(vDisp * 1.6 + uTime * 0.05), 0.35);
-  col += sheen * fres * 0.75;
+  col += sheen * fres * mix(0.75, 1.6, uDesk);
 
   // soft specular glint along the creases of the displacement
   float spec = pow(max(dot(reflect(-keyDir, vNormal), vView), 0.0), 24.0);
@@ -157,7 +157,8 @@ function init(canvas) {
     vertexShader: orbVert, fragmentShader: orbFrag,
     uniforms: {
       uTime: { value: 0 }, uAmp: { value: 0.04 }, uMouse: { value: 0 }, uFade: { value: 1 },
-      uA: { value: new THREE.Color(0x084424) }, // brand deep green body
+      uDesk: { value: isMobile ? 0.0 : 1.0 }, // desktop-only contrast/rim lift; mobile keeps the softer original look
+      uA: { value: new THREE.Color(isMobile ? 0x084424 : 0x0f7a3a) }, // deep green body (brighter on desktop so it separates from the dark bg)
       uB: { value: new THREE.Color(0x30cc64) }, // emerald mid
       uC: { value: new THREE.Color(0xd8f404) }, // neon yellow rim
     },
@@ -196,7 +197,7 @@ function init(canvas) {
 
   // On phones the portrait viewport makes the hook fill the screen + bloom
   // floods green — keep it a small upper accent instead of a backdrop.
-  orb.scale.setScalar(isMobile ? 0.62 : 1.15);
+  orb.scale.setScalar(isMobile ? 0.62 : 1.35);
   orb.position.x = (isMobile ? 0.3 : 2.3) * (RTL ? -1 : 1);
   orb.position.y = isMobile ? 1.85 : 0.35;
   scene.add(orb);
@@ -231,7 +232,7 @@ function init(canvas) {
   // ---- post ----
   const composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
-  const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), isMobile ? 0.18 : 0.32, 0.5, 0.72);
+  const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), isMobile ? 0.18 : 0.5, 0.5, 0.72);
   composer.addPass(bloom);
 
   // cinematic grade: chromatic aberration at the edges + vignette + film grain
@@ -357,16 +358,20 @@ function init(canvas) {
     // scroll handoff: the orb recedes, shrinks and dissolves as the next
     // section rises — hero → statement reads as one continuous camera move
     const handoff = THREE.MathUtils.smoothstep(sp, 0.0, 1.0);
-    const oScale = (isMobile ? 0.62 : 1.15) * (1.0 - handoff * 0.45);
+    const oScale = (isMobile ? 0.62 : 1.35) * (1.0 - handoff * 0.45);
     orb.scale.setScalar(oScale);
     orbMat.uniforms.uFade.value = 1.0 - handoff * 0.85;
 
     // the hook tracks the cursor across the hero. Drive it from the RAW cursor
     // (target) with a single smoothing stage so it follows crisply instead of
     // lagging through two cascaded low-pass filters (mouse.lerp → position.lerp).
-    const baseX = (isMobile ? 0.3 : 0.4) * (RTL ? -1 : 1);
-    const baseY = isMobile ? (isTouch ? 1.85 : 1.3) : 0.15;
-    const rangeX = isTouch ? 0.45 : 3.0, rangeY = isTouch ? 0.4 : 2.0;
+    // Desktop: rest the hook in the clear space beside the left-aligned headline,
+    // frustum-aware (from the actual window aspect at z=6/FOV50) so it never clips
+    // on narrow / split-screen windows. RTL mirrors it to the left.
+    const halfW = Math.tan((50 * Math.PI / 180) / 2) * 6 * (window.innerWidth / Math.max(1, window.innerHeight));
+    const baseX = (isMobile ? 0.3 : Math.min(2.6, halfW - 1.3)) * (RTL ? -1 : 1);
+    const baseY = isMobile ? (isTouch ? 1.85 : 1.3) : 0.35;
+    const rangeX = isTouch ? 0.45 : 2.2, rangeY = isTouch ? 0.4 : 2.0;
     const followX = baseX + target.x * rangeX;
     const followY = baseY + target.y * rangeY - sp * 1.2;
     orb.position.x += (followX - orb.position.x) * 0.14;

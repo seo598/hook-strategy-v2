@@ -8,58 +8,71 @@
 
 export const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const FINE = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
-/* ---------- dynamic CDN imports (resilient) ---------- */
-export let gsap = null, ScrollTrigger = null, Lenis = null;
-// Fetch all three CDN modules concurrently (was 3 sequential round-trips that
-// blocked every interaction below until each resolved in turn). Each failure is
-// isolated so a single CDN hiccup still leaves the others usable.
-const [gsapMod, stMod, lenisMod] = await Promise.all([
+/* ---------- dynamic CDN imports (resilient, NON-blocking) ---------- */
+export let gsap = null, ScrollTrigger = null, Lenis = null, lenis = null;
+let heroRevealed = false;
+// Load the motion libs OFF the critical path: NO top-level await, so module
+// evaluation (preloader, reveals, cursor, nav, counters below) runs immediately
+// instead of waiting on an esm.sh round-trip. GSAP/Lenis get wired in when they
+// arrive; each failure is isolated (content still works with native scroll).
+const cdnReady = Promise.all([
   import('https://esm.sh/gsap@3.12.5').catch((e) => { console.warn('GSAP unavailable, using fallback motion', e); return null; }),
   import('https://esm.sh/gsap@3.12.5/ScrollTrigger').catch(() => null),
   import('https://esm.sh/lenis@1.1.14').catch((e) => { console.warn('Lenis unavailable, native scroll', e); return null; }),
-]);
-if (gsapMod) gsap = gsapMod.gsap || gsapMod.default;
-if (stMod) ScrollTrigger = stMod.ScrollTrigger || stMod.default;
-if (gsap && ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
-if (lenisMod) Lenis = lenisMod.default || lenisMod.Lenis;
+]).then(([gsapMod, stMod, lenisMod]) => {
+  if (gsapMod) gsap = gsapMod.gsap || gsapMod.default;
+  if (stMod) ScrollTrigger = stMod.ScrollTrigger || stMod.default;
+  if (gsap && ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
+  if (lenisMod) Lenis = lenisMod.default || lenisMod.Lenis;
 
-// Set the hidden start for split-title words via GSAP itself (not CSS) so no
-// stale px transform is parsed. Done immediately — the preloader covers it.
-if (gsap && !RM) gsap.set('.hero__title .word, .contact__title .word', { yPercent: 110 });
+  // Hide the split-title words for the stagger reveal — but ONLY on desktop and
+  // ONLY if we haven't revealed yet. Mobile shows them immediately (fast LCP); the
+  // !heroRevealed guard means a late-arriving GSAP can never re-hide an already
+  // shown headline (which would leave the LCP element invisible forever).
+  if (gsap && !RM && !isMobile && !heroRevealed) gsap.set('.hero__title .word, .contact__title .word', { yPercent: 110 });
 
-/* ---------- preloader ---------- */
+  // Lenis smooth scroll (wired here now that it's loaded)
+  if (Lenis && !RM) {
+    lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
+    if (gsap && ScrollTrigger) {
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add((t) => lenis.raf(t * 1000));
+      gsap.ticker.lagSmoothing(0);
+    } else {
+      const raf = (t) => { lenis.raf(t); requestAnimationFrame(raf); };
+      requestAnimationFrame(raf);
+    }
+    document.documentElement.classList.add('lenis');
+  }
+  return { gsap, ScrollTrigger, Lenis };
+});
+
+/* ---------- preloader (fast: no fake loading gate that masks the LCP headline) ---------- */
 (function preloader() {
   const el = document.getElementById('preloader');
+  if (!el) return;
   const fill = document.getElementById('preloader-fill');
   const count = document.getElementById('preloader-count');
-  if (!el) return;
+  const done = () => {
+    if (el.dataset.done) return; el.dataset.done = '1';
+    el.style.transition = 'opacity .3s ease, visibility .3s ease'; // quick uncover (CSS default was 0.8s)
+    el.classList.add('is-done');
+    startIntro();
+  };
+  // The page is static HTML — reveal the headline ASAP instead of after a ~1.5s fake
+  // progress ramp. Mobile / reduced-motion uncover on the next frame; desktop keeps a
+  // brief (~300ms) branded flourish that is NOT gated on any network request.
+  if (RM || isMobile) { requestAnimationFrame(done); return; }
   let p = 0;
   const tick = setInterval(() => {
-    p = Math.min(100, p + Math.random() * 18);
+    p = Math.min(100, p + 34);
     if (fill) fill.style.width = p + '%';
     if (count) count.textContent = Math.floor(p);
-    if (p >= 100) {
-      clearInterval(tick);
-      setTimeout(() => { el.classList.add('is-done'); startIntro(); }, 250);
-    }
-  }, 120);
+    if (p >= 100) { clearInterval(tick); done(); }
+  }, 90);
 })();
-
-/* ---------- Lenis smooth scroll ---------- */
-export let lenis = null;
-if (Lenis && !RM) {
-  lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
-  if (gsap && ScrollTrigger) {
-    lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add((t) => lenis.raf(t * 1000));
-    gsap.ticker.lagSmoothing(0);
-  } else {
-    const raf = (t) => { lenis.raf(t); requestAnimationFrame(raf); };
-    requestAnimationFrame(raf);
-  }
-  document.documentElement.classList.add('lenis');
-}
 
 /* smooth anchor scrolling */
 document.querySelectorAll('a[href^="#"]').forEach((a) => {
@@ -77,6 +90,7 @@ document.querySelectorAll('a[href^="#"]').forEach((a) => {
 
 /* ---------- intro (hero title) ---------- */
 function startIntro() {
+  heroRevealed = true; // lock: the CDN .then() must not re-hide the words after this
   const words = document.querySelectorAll('.hero__title .word');
   if (gsap && !RM) {
     gsap.to('.hero__title .word', { yPercent: 0, duration: 1.1, ease: 'power4.out', stagger: 0.08, delay: 0.1 });
@@ -86,6 +100,9 @@ function startIntro() {
     document.querySelectorAll('.hero .reveal-up').forEach((el) => el.classList.add('is-in'));
   }
 }
+// Safety net: if the preloader never fires (or a page reuses the hero without one),
+// force the reveal so the split-title words can never stay stuck hidden.
+setTimeout(() => { if (!heroRevealed) startIntro(); }, 1600);
 
 /* ---------- scroll reveals (IntersectionObserver — CDN-independent) ---------- */
 (function reveals() {
@@ -393,8 +410,8 @@ if (burger) {
   });
 })();
 
-/* ---------- pinned, scroll-scrubbed Process ---------- */
-(function pinnedProcess() {
+/* ---------- pinned, scroll-scrubbed Process (deferred until the motion libs load) ---------- */
+cdnReady.then(function pinnedProcess() {
   const track = document.querySelector('[data-process]');
   if (!track || !gsap || !ScrollTrigger || RM) return;
   if (!window.matchMedia('(min-width: 769px)').matches) return; // mobile keeps the simple stack
@@ -423,7 +440,7 @@ if (burger) {
   });
   // Lenis + pinning need a layout recalc once everything has settled
   window.addEventListener('load', () => ScrollTrigger.refresh());
-})();
+});
 
 /* ---------- page-transition curtain (multi-page wipe) ---------- */
 (function pageCurtain() {
