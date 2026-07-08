@@ -20,7 +20,6 @@
   <meta property="og:image" content="https://www.thehookstrategy.com/assets/img/og.jpg"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"/>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'"/>
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"/></noscript>
@@ -33,13 +32,13 @@
   <script type="importmap">
   {
     "imports": {
-      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js",
-      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      "three": "./assets/vendor/three/three.module.min.js",
+      "three/addons/": "./assets/vendor/three/addons/"
     }
   }
   </script>
-  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js" crossorigin fetchpriority="low" />
-  <link rel="modulepreload" href="assets/js/grove.js?v=4" fetchpriority="low" />
+  <link rel="modulepreload" href="./assets/vendor/three/three.module.min.js" fetchpriority="low" />
+  <link rel="modulepreload" href="assets/js/grove.js?v=5" fetchpriority="low" />
   <script type="speculationrules">
   {"prefetch":[{"source":"document","eagerness":"moderate","where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"[target=_blank]"}},{"not":{"selector_matches":"[rel~=external]"}}]}}]}
   </script>
@@ -141,6 +140,6 @@
     </div>
   </noscript>
 
-  <script type="module" src="assets/js/grove.js?v=4"></script>
+  <script type="module" src="assets/js/grove.js?v=5"></script>
 </body>
 </html>

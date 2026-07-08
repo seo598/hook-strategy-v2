@@ -79,8 +79,24 @@ const gradTex = new THREE.DataTexture(new Uint8Array([70, 150, 255]), 3, 1, THRE
 gradTex.needsUpdate = true; gradTex.minFilter = gradTex.magFilter = THREE.NearestFilter;
 const toon = (color, opts = {}) => new THREE.MeshToonMaterial({ color, gradientMap: gradTex, ...opts });
 
+/* sky palette (night → sunrise → golden harvest) + radial-gradient texture helper */
+const SKY = {
+  nightTop: new THREE.Color(0x020d08), nightBot: new THREE.Color(0x0d2f1c),
+  dayTop:   new THREE.Color(0x0b3319), dayBot:   new THREE.Color(0x2f6a2e),
+  goldTop:  new THREE.Color(0x123016), goldBot:  new THREE.Color(0x59551d),
+  // glow tones kept dark enough that base+glow stays under the bloom threshold (no sky smear)
+  glowNight: new THREE.Color(0x2a4a22), glowDay: new THREE.Color(0x6a8f2c), glowGold: new THREE.Color(0xa8862f),
+};
+function radialTex(inner, outer, size = 128) {
+  const c = document.createElement('canvas'); c.width = c.height = size;
+  const g = c.getContext('2d'), grd = g.createRadialGradient(size / 2, size / 2, size * 0.05, size / 2, size / 2, size / 2);
+  grd.addColorStop(0, inner); grd.addColorStop(1, outer);
+  g.fillStyle = grd; g.fillRect(0, 0, size, size);
+  return new THREE.CanvasTexture(c);
+}
+
 /* lights */
-scene.add(new THREE.AmbientLight(0x3a5a45, 0.85));
+const amb = new THREE.AmbientLight(0x3a5a45, 0.85); scene.add(amb);
 const sunLight = new THREE.DirectionalLight(0xfff2c8, 0.25);
 sunLight.position.set(4, 5, -2);
 scene.add(sunLight);
@@ -88,28 +104,128 @@ const rim = new THREE.PointLight(0xd8f404, 0.5, 14);
 rim.position.set(-3, 2.5, 3);
 scene.add(rim);
 
+/* ---------- sky dome + stars + moon ----------
+   All fog:false (FogExp2 0.055 at r=48 would render them as pure fog color) and
+   renderOrder -1000..-998 with depthWrite:false, so they draw first and never
+   occlude the transparent soil-cutaway / roots ordering. */
+const skyUni = {
+  top: { value: SKY.nightTop.clone() }, bot: { value: SKY.nightBot.clone() },
+  glow: { value: SKY.glowNight.clone() }, glowDir: { value: new THREE.Vector3(0.66, 0.05, -0.75) }, glowAmt: { value: 0.35 },
+};
+const dome = new THREE.Mesh(
+  new THREE.SphereGeometry(48, 24, 12),
+  new THREE.ShaderMaterial({
+    uniforms: skyUni, side: THREE.BackSide, depthWrite: false, fog: false,
+    vertexShader: 'varying vec3 vDir; void main(){ vDir = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+    fragmentShader: `varying vec3 vDir;
+      uniform vec3 top, bot, glow, glowDir; uniform float glowAmt;
+      void main(){
+        vec3 d = normalize(vDir);
+        vec3 col = mix(bot, top, smoothstep(-0.06, 0.5, d.y));
+        col += glow * pow(max(dot(d, normalize(glowDir)), 0.0), 6.0) * glowAmt;
+        gl_FragColor = vec4(col, 1.0);
+      }`,
+  })
+);
+dome.renderOrder = -1000; dome.frustumCulled = false; scene.add(dome);
+
+/* stars — upper hemisphere, fade out as the sun rises */
+const STAR_N = isMobile ? 90 : 170;
+const starPos = new Float32Array(STAR_N * 3);
+for (let i = 0; i < STAR_N; i++) {
+  const a = Math.random() * Math.PI * 2, y = 0.12 + Math.random() * 0.85, rr = Math.sqrt(1 - y * y);
+  starPos[i * 3] = Math.cos(a) * rr * 44; starPos[i * 3 + 1] = y * 44; starPos[i * 3 + 2] = Math.sin(a) * rr * 44;
+}
+const starGeo = new THREE.BufferGeometry();
+starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+const starMat = new THREE.PointsMaterial({ color: 0xdfffe9, size: 0.55, transparent: true, opacity: 0.6, depthWrite: false, fog: false });
+const stars = new THREE.Points(starGeo, starMat);
+stars.renderOrder = -999; stars.frustumCulled = false; scene.add(stars);
+
+/* moon — soft sprite, fades at sunrise */
+const moon = new THREE.Sprite(new THREE.SpriteMaterial({
+  map: radialTex('rgba(232,252,240,0.95)', 'rgba(232,252,240,0)', 64),
+  transparent: true, opacity: 0.85, depthWrite: false, fog: false,
+}));
+moon.position.set(-16, 20, -28); moon.scale.setScalar(5); moon.renderOrder = -998; scene.add(moon);
+
 /* ---------- island ---------- */
 const world = new THREE.Group(); scene.add(world);
-// transparent-capable so the soil can turn into a cutaway during the roots stage
-const isle = new THREE.Mesh(new THREE.CylinderGeometry(3.4, 2.1, 1.15, 12, 1), toon(C.soil, { transparent: true }));
+// transparent-capable so the soil can turn into a cutaway during the roots stage.
+// Rolling rim + craggy underside — deterministic noise so cap/side seam verts match.
+const groundY = (x, z) => {
+  const r = Math.hypot(x, z);
+  const f = Math.min(1, Math.max(0, (r - 0.9) / 1.4)); // keep the planting spot dead flat
+  return (Math.sin(x * 2.1 + 7.3) * Math.cos(z * 2.4 + 2.1) + Math.sin(x * 5.3) * 0.35) * 0.075 * f;
+};
+const isleGeo = new THREE.CylinderGeometry(3.4, 2.1, 1.15, 24, 3);
+{
+  const pos = isleGeo.attributes.position, v = new THREE.Vector3();
+  for (let i = 0; i < pos.count; i++) {
+    v.fromBufferAttribute(pos, i);
+    if (v.y > 0.55) pos.setY(i, v.y + groundY(v.x, v.z));
+    else if (v.y < -0.55) pos.setY(i, v.y - Math.abs(Math.sin(v.x * 2.9 + 1.7) * Math.cos(v.z * 2.3)) * 0.3);
+  }
+  isleGeo.computeVertexNormals();
+}
+const isle = new THREE.Mesh(isleGeo, toon(C.soil, { transparent: true }));
 isle.position.y = -0.58; world.add(isle);
 const mound = new THREE.Mesh(new THREE.SphereGeometry(0.55, 10, 8), toon(C.soilDark, { transparent: true }));
 mound.scale.set(1, 0.32, 1); mound.position.y = 0.02; world.add(mound);
-// soil fade helper (cutaway ↔ solid) — depthWrite off while translucent so roots show through
+// soil fade helper (cutaway ↔ solid) — depthWrite off while translucent so roots show through.
+// Generation token: the newest call supersedes any still-running fade (overlaps can't fight).
+let soilFadeGen = 0;
 function fadeSoil(to) {
+  const gen = ++soilFadeGen;
   [isle, mound].forEach((m) => {
     m.material.transparent = true; m.material.depthWrite = to > 0.7;
     const from = m.material.opacity;
-    animate(0.7, (k) => { m.material.opacity = from + (to - from) * k; });
+    animate(0.7, (k) => { if (gen === soilFadeGen) m.material.opacity = from + (to - from) * k; });
   });
 }
-for (let i = 0; i < 14; i++) { // grass tufts
-  const g = new THREE.Mesh(new THREE.ConeGeometry(0.045, 0.22 + Math.random() * 0.18, 4), toon(C.grass));
-  const a = Math.random() * Math.PI * 2, r = 1.1 + Math.random() * 1.9;
-  g.position.set(Math.cos(a) * r, 0.09, Math.sin(a) * r);
-  g.rotation.z = (Math.random() - 0.5) * 0.35;
-  world.add(g);
+// One-time downward raycasts give the EXACT displaced-surface height for all
+// dressing (the cylinder cap is a triangle fan, so analytic noise ≠ mesh surface).
+const _ray = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3(0, -1, 0));
+isle.updateMatrixWorld(true);
+const groundAt = (x, z) => {
+  _ray.ray.origin.set(x, 2, z);
+  const h = _ray.intersectObject(isle, false)[0];
+  return h ? h.point.y : 0;
+};
+
+/* grass — more, colour/height varied, base-pivoted for sway; ONE shared unit cone */
+const GRASS = [];
+const grassGeo = new THREE.ConeGeometry(1, 1, 4); grassGeo.translate(0, 0.5, 0); // pivot at base
+const grassMats = [toon(0x155c33), toon(0x1e7a40), toon(0x2b9a4e)];
+const NGRASS = isMobile ? 24 : 44;
+for (let i = 0; i < NGRASS; i++) {
+  const h = 0.16 + Math.random() * 0.24, rad = 0.035 + Math.random() * 0.025;
+  const g = new THREE.Mesh(grassGeo, grassMats[(Math.random() * grassMats.length) | 0]);
+  g.scale.set(rad, h, rad);
+  const a = Math.random() * Math.PI * 2, r = 0.95 + Math.pow(Math.random(), 0.7) * 2.15;
+  const x = Math.cos(a) * r, z = Math.sin(a) * r;
+  g.position.set(x, groundAt(x, z) + 0.005, z);
+  const base = (Math.random() - 0.5) * 0.35;
+  g.rotation.z = base; world.add(g);
+  GRASS.push({ m: g, base, ph: Math.random() * 10, sp: 1.2 + Math.random() * 1.1 });
 }
+/* flower buds + pebbles (static dressing, brand palette) */
+const flowerMats = [toon(C.gold, { emissive: C.gold, emissiveIntensity: 0.3 }), toon(C.mint), toon(C.lime, { emissive: C.lime, emissiveIntensity: 0.2 })];
+for (let i = 0, NF = isMobile ? 6 : 10; i < NF; i++) {
+  const f = new THREE.Mesh(new THREE.SphereGeometry(0.035, 6, 5), flowerMats[i % 3]);
+  const a = Math.random() * Math.PI * 2, r = 1.0 + Math.random() * 2.0, x = Math.cos(a) * r, z = Math.sin(a) * r;
+  f.position.set(x, groundAt(x, z) + 0.055, z); f.scale.y = 0.75; world.add(f);
+}
+const pebbleMat = toon(0x24422f);
+for (let i = 0, NP = isMobile ? 5 : 8; i < NP; i++) {
+  const p = new THREE.Mesh(new THREE.DodecahedronGeometry(0.045 + Math.random() * 0.035, 0), pebbleMat);
+  const a = Math.random() * Math.PI * 2, r = 1.3 + Math.random() * 1.9, x = Math.cos(a) * r, z = Math.sin(a) * r;
+  p.position.set(x, groundAt(x, z) + 0.02, z); p.rotation.set(Math.random() * 3, Math.random() * 3, 0); world.add(p);
+}
+/* soft contact shadow under the tree (y clears the displaced terrain; follows fadeSoil) */
+const shadow = new THREE.Mesh(new THREE.PlaneGeometry(1, 1),
+  new THREE.MeshBasicMaterial({ map: radialTex('rgba(1,8,4,0.55)', 'rgba(1,8,4,0)'), transparent: true, depthWrite: false, opacity: 0.45 }));
+shadow.rotation.x = -Math.PI / 2; shadow.position.y = 0.09; world.add(shadow);
 
 /* ---------- seed & sprout ---------- */
 const seed = new THREE.Mesh(new THREE.SphereGeometry(0.09, 8, 6), toon(0x4a3620));
@@ -225,8 +341,12 @@ const PLOTS = [];
 
 /* ---------- rain cloud + drops ---------- */
 const cloud = new THREE.Group(); cloud.position.set(0.2, 4.3, -0.3); cloud.visible = false; world.add(cloud);
+// one shared material so the cloud can visibly darken while it rains
+const CLOUD_BASE = new THREE.Color(0x1d3b2a), CLOUD_DARK = new THREE.Color(0x0f2318);
+const cloudMat = toon(0x1d3b2a);
+let cloudDark = 0;
 [[0, 0, 0, 0.65], [0.55, -0.08, 0.1, 0.45], [-0.55, -0.05, -0.1, 0.5]].forEach(([x, y, z, r]) => {
-  const c = new THREE.Mesh(new THREE.IcosahedronGeometry(r, 0), toon(0x1d3b2a));
+  const c = new THREE.Mesh(new THREE.IcosahedronGeometry(r, 0), cloudMat);
   c.position.set(x, y, z); c.scale.y = 0.62; cloud.add(c);
 });
 const RAIN_N = 220;
@@ -252,6 +372,19 @@ function rainBurst() {
   }
 }
 
+/* rain splash rings — pooled; the pool size IS the per-frame budget */
+const SPLASH = [];
+for (let i = 0, NS = isMobile ? 6 : 10; i < NS; i++) {
+  const m = new THREE.Mesh(new THREE.RingGeometry(0.05, 0.075, 12),
+    new THREE.MeshBasicMaterial({ color: 0x9fd8ff, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false }));
+  m.rotation.x = -Math.PI / 2; m.visible = false; m.renderOrder = 2; world.add(m); SPLASH.push(m);
+}
+function splashAt(x, z) {
+  const m = SPLASH.find((s) => !s.visible); if (!m) return;
+  m.visible = true; m.position.set(x, 0.12, z); m.scale.setScalar(0.4);
+  animate(0.45, (k) => { m.scale.setScalar(0.4 + k * 2.4); m.material.opacity = 0.55 * (1 - k); }, easeOutCubic, () => { m.visible = false; });
+}
+
 /* ---------- sun + beam ---------- */
 const sun = new THREE.Mesh(new THREE.SphereGeometry(0.5, 12, 10),
   new THREE.MeshBasicMaterial({ color: C.gold }));
@@ -264,7 +397,14 @@ sun.position.copy(SUN0); sun.visible = false; scene.add(sun);
 const beam = new THREE.Mesh(new THREE.ConeGeometry(1.6, 7, 12, 1, true),
   new THREE.MeshBasicMaterial({ color: 0xfce77d, transparent: true, opacity: 0, side: THREE.DoubleSide, depthWrite: false, blending: THREE.AdditiveBlending }));
 beam.visible = false; scene.add(beam);
+/* hot glow around the sun ball */
+const sunGlow = new THREE.Sprite(new THREE.SpriteMaterial({
+  map: radialTex('rgba(252,224,120,0.9)', 'rgba(252,204,0,0)', 128),
+  color: 0xffe9a0, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, fog: false,
+}));
+sunGlow.visible = false; sunGlow.scale.setScalar(3); scene.add(sunGlow);
 let sunP = 0; // 0..1 sunrise progress
+let goldMix = 0; // 0..1 golden-harvest grade after finishGame
 
 /* ---------- wind streaks ---------- */
 const WIND_N = 90;
@@ -281,6 +421,24 @@ const windMat = new THREE.PointsMaterial({ color: 0xa8d8b8, size: 0.05, transpar
 const windPts = new THREE.Points(windGeo, windMat);
 windPts.frustumCulled = false; world.add(windPts);
 let windPower = 0;
+
+/* wind-blown leaves — bigger textured sprites riding the same gust field */
+const LEAF_N = isMobile ? 12 : 22;
+const leafPos2 = new Float32Array(LEAF_N * 3), leafSeed2 = new Float32Array(LEAF_N);
+for (let i = 0; i < LEAF_N; i++) {
+  leafPos2[i * 3] = -6 + Math.random() * 12;
+  leafPos2[i * 3 + 1] = 0.5 + Math.random() * 2.8;
+  leafPos2[i * 3 + 2] = -1.5 + Math.random() * 3;
+  leafSeed2[i] = Math.random() * 10;
+}
+const leafGeo2 = new THREE.BufferGeometry();
+leafGeo2.setAttribute('position', new THREE.BufferAttribute(leafPos2, 3).setUsage(THREE.DynamicDrawUsage));
+const leafPtsMat = new THREE.PointsMaterial({
+  map: radialTex('rgba(83,224,127,0.95)', 'rgba(83,224,127,0)', 32),
+  color: 0x53e07f, size: 0.16, transparent: true, opacity: 0, depthWrite: false,
+});
+const leafPts = new THREE.Points(leafGeo2, leafPtsMat);
+leafPts.frustumCulled = false; world.add(leafPts);
 
 /* ---------- spores ---------- */
 const SPORES = [];
@@ -331,6 +489,18 @@ for (let i = 0; i < FLY_N; i++) {
 const flyGeo = new THREE.BufferGeometry();
 flyGeo.setAttribute('position', new THREE.BufferAttribute(flyPos, 3).setUsage(THREE.DynamicDrawUsage));
 world.add(new THREE.Points(flyGeo, new THREE.PointsMaterial({ color: 0xc9e88f, size: 0.045, transparent: true, opacity: 0.5, blending: THREE.AdditiveBlending, depthWrite: false })));
+
+/* ---------- butterflies — appear after harvest ---------- */
+const BFLY = []; let bfliesOn = false;
+for (let i = 0, NB = RM ? 0 : (isMobile ? 2 : 3); i < NB; i++) {
+  const g = new THREE.Group();
+  const wgeo = new THREE.PlaneGeometry(0.13, 0.09); wgeo.rotateX(-Math.PI / 2); wgeo.translate(0.065, 0, 0);
+  const wm = new THREE.MeshBasicMaterial({ color: [C.gold, C.mint, C.lime][i % 3], side: THREE.DoubleSide, transparent: true, opacity: 0.9 });
+  const L = new THREE.Mesh(wgeo, wm), R = new THREE.Mesh(wgeo, wm);
+  R.rotation.y = Math.PI; // mirrored wing; same rotation.z flaps both symmetrically
+  g.add(L, R); g.visible = false; world.add(g);
+  BFLY.push({ g, L, R, ang: Math.random() * 6.28, r: 1.5 + i * 0.5, h: 1.7 + i * 0.4, sp: 0.5 + Math.random() * 0.3, ph: Math.random() * 10 });
+}
 
 /* ---------- post ---------- */
 // Multisampled composer target (WebGL2) so edges are smooth on desktop.
@@ -800,6 +970,7 @@ function frame() {
   /* wind visuals + decay (any stage, adds life) */
   windPower = Math.max(0, windPower - dt * (stage === 4 ? 0.35 : 1.2));
   windMat.opacity = windPower * 0.55;
+  leafPtsMat.opacity = Math.min(0.9, windPower * 1.2);
   if (windPower > 0.01) {
     for (let i = 0; i < WIND_N; i++) {
       windPos[i * 3] += (2.5 + windPower * 5) * dt;
@@ -807,6 +978,13 @@ function frame() {
       if (windPos[i * 3] > 6.5) windPos[i * 3] = -6.5;
     }
     windGeo.attributes.position.needsUpdate = true;
+    // leaves ride the same gust field, tumbling a little harder
+    for (let i = 0; i < LEAF_N; i++) {
+      leafPos2[i * 3] += (3 + windPower * 5.5) * dt;
+      leafPos2[i * 3 + 1] += Math.sin(t * 4 + leafSeed2[i]) * dt * 1.1;
+      if (leafPos2[i * 3] > 6.5) leafPos2[i * 3] = -6.5;
+    }
+    leafGeo2.attributes.position.needsUpdate = true;
   }
   if (SND.windGain) SND.windGain.gain.value = SND.on ? windPower * 0.35 : 0;
   // tree lean in wind
@@ -839,6 +1017,7 @@ function frame() {
     anyRain = true;
     rainPos[i * 3 + 1] -= rainVel[i] * dt;
     if (rainPos[i * 3 + 1] <= 0.04) {
+      if (!RM) splashAt(rainPos[i * 3], rainPos[i * 3 + 2]); // ring where the drop lands
       rainVel[i] = 0; rainPos[i * 3 + 1] = -100;
       landed++;
     }
@@ -855,6 +1034,9 @@ function frame() {
     if (stageP >= 1) completeStage();
   }
   if (cloud.visible) cloud.position.x = 0.2 + Math.sin(t * 0.6) * 0.35;
+  // the cloud grows heavy/dark while it is actually raining
+  cloudDark += ((anyRain ? 1 : 0) - cloudDark) * (1 - Math.exp(-dt * 2.5));
+  cloudMat.color.copy(CLOUD_BASE).lerp(CLOUD_DARK, cloudDark);
 
   /* sun rise/shine */
   if (sun.visible) {
@@ -865,9 +1047,28 @@ function frame() {
     beam.position.copy(sun.position).lerp(_v.set(0, 1.6, 0), 0.5);
     beam.lookAt(0, 1.4, 0); beam.rotateX(-Math.PI / 2);
     beam.material.opacity = (isHolding() && stage === 3 ? 0.16 : 0.06) * p;
-    skyCol.copy(C.bg0).lerp(C.bgSun, p * 0.85);
-    renderer.setClearColor(skyCol, 1);
-    scene.fog.color.copy(skyCol); // fog follows the sky so the horizon has no seam
+  }
+
+  /* unified sky grade — one state (night → pSky sunrise → goldMix harvest) drives
+     dome, fog, clear color, stars, moon, sun glow, and ambient warmth */
+  const pSky = sun.visible ? (stage === 3 ? Math.max(stageP, sunP) : sunP) : 0;
+  goldMix += ((finished ? 1 : 0) - goldMix) * (1 - Math.exp(-dt * 0.7));
+  skyUni.top.value.copy(SKY.nightTop).lerp(SKY.dayTop, pSky).lerp(SKY.goldTop, goldMix);
+  skyUni.bot.value.copy(SKY.nightBot).lerp(SKY.dayBot, pSky).lerp(SKY.goldBot, goldMix);
+  skyUni.glow.value.copy(SKY.glowNight).lerp(SKY.glowDay, pSky).lerp(SKY.glowGold, goldMix);
+  skyUni.glowAmt.value = 0.35 + pSky * 0.25; // clamped so sky never crosses the bloom threshold
+  if (sun.visible) skyUni.glowDir.value.copy(sun.position).normalize();
+  skyCol.copy(skyUni.bot.value);
+  renderer.setClearColor(skyCol, 1);                         // safety net behind the dome
+  scene.fog.color.copy(skyCol).lerp(skyUni.top.value, 0.15); // island edge melts into the horizon
+  amb.intensity = 0.85 + pSky * 0.25;
+  starMat.opacity = RM ? 0.5 * (1 - pSky) : (0.5 + Math.sin(t * 0.6) * 0.12) * (1 - pSky);
+  moon.material.opacity = 0.85 * (1 - pSky) * (1 - goldMix);
+  if (sun.visible) {
+    sunGlow.visible = true;
+    sunGlow.position.copy(sun.position);
+    sunGlow.material.opacity = (0.3 + (isHolding() && stage === 3 ? 0.25 : 0.1)) * pSky;
+    sunGlow.scale.setScalar(2.6 + pSky * 1.8 + (RM ? 0 : Math.sin(t * 2.2) * 0.08));
   }
 
   /* bursts physics */
@@ -891,6 +1092,7 @@ function frame() {
         const s = 1 + Math.sin(t * 3 + i) * 0.07;
         f.scale.setScalar(s);
         f.position.y = f.userData.baseY + Math.sin(t * 1.6 + i * 2) * 0.03;
+        f.material.emissiveIntensity = 0.7 + (Math.sin(t * 3 + i) * 0.5 + 0.5) * 0.5; // ripe shimmer
       }
     });
   }
@@ -915,6 +1117,31 @@ function frame() {
     flyPos[i * 3 + 1] += Math.sin(t * 0.8 + flySeed[i]) * dt * 0.12;
   }
   flyGeo.attributes.position.needsUpdate = true;
+
+  /* ambient life: grass sway, canopy breathing, contact shadow, butterflies */
+  if (!RM) {
+    for (const G of GRASS) G.m.rotation.z = G.base + Math.sin(t * G.sp + G.ph) * 0.05 + windPower * 0.3;
+    for (let i = 0; i < PUFFS.length; i++) {
+      const p = PUFFS[i];
+      // latch once the popIn overshoot first crosses 1.0 (easeOutBack peaks ~1.07),
+      // so breathing never damps the springy pop-in
+      if (!p.userData.live) { if (p.visible && p.scale.x >= 1.0) p.userData.live = true; continue; }
+      p.scale.setScalar(1 + Math.sin(t * 1.6 + i * 1.9) * 0.035 + windPower * 0.02);
+    }
+  }
+  shadow.scale.setScalar(0.9 + trunk.scale.y * 2.4);
+  shadow.material.opacity = 0.45 * isle.material.opacity; // follows fadeSoil: vanishes with the cutaway
+  if (finished) {
+    if (!bfliesOn) { bfliesOn = true; BFLY.forEach((b, i) => setTimeout(() => { b.g.visible = true; }, 600 + i * 450)); }
+    for (const b of BFLY) {
+      if (!b.g.visible) continue;
+      b.ang += dt * b.sp;
+      b.g.position.set(Math.cos(b.ang) * b.r, b.h + Math.sin(t * 1.3 + b.ph) * 0.25, Math.sin(b.ang) * b.r);
+      b.g.rotation.y = -b.ang;
+      const fl = Math.sin(t * 12 + b.ph) * 0.85;
+      b.L.rotation.z = fl; b.R.rotation.z = fl; // R is Y-flipped, so same z mirrors the flap
+    }
+  }
 
   composer.render();
 

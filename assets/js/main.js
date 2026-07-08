@@ -14,13 +14,14 @@ const isMobile = window.matchMedia('(max-width: 768px)').matches;
 export let gsap = null, ScrollTrigger = null, Lenis = null, lenis = null;
 let heroRevealed = false;
 // Load the motion libs OFF the critical path: NO top-level await, so module
-// evaluation (preloader, reveals, cursor, nav, counters below) runs immediately
-// instead of waiting on an esm.sh round-trip. GSAP/Lenis get wired in when they
-// arrive; each failure is isolated (content still works with native scroll).
+// evaluation (preloader, reveals, cursor, nav, counters below) runs immediately.
+// The bundles are SELF-HOSTED under assets/vendor/ (same-origin, single hop).
+// GSAP/Lenis get wired in when they arrive; each failure is isolated (content
+// still works with native scroll).
 const cdnReady = Promise.all([
-  import('https://esm.sh/gsap@3.12.5').catch((e) => { console.warn('GSAP unavailable, using fallback motion', e); return null; }),
-  import('https://esm.sh/gsap@3.12.5/ScrollTrigger').catch(() => null),
-  import('https://esm.sh/lenis@1.1.14').catch((e) => { console.warn('Lenis unavailable, native scroll', e); return null; }),
+  import('../vendor/gsap.js').catch((e) => { console.warn('GSAP unavailable, using fallback motion', e); return null; }),
+  import('../vendor/ScrollTrigger.js').catch(() => null),
+  import('../vendor/lenis.js').catch((e) => { console.warn('Lenis unavailable, native scroll', e); return null; }),
 ]).then(([gsapMod, stMod, lenisMod]) => {
   if (gsapMod) gsap = gsapMod.gsap || gsapMod.default;
   if (stMod) ScrollTrigger = stMod.ScrollTrigger || stMod.default;
