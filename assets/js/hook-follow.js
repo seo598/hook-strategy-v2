@@ -111,7 +111,7 @@ function init() {
     cap.position.set(p.x - c.x, p.y - c.y, p.z - c.z);
     hook.add(cap);
   });
-  hook.scale.setScalar(0.52);
+  hook.scale.setScalar(0.34);
   scene.add(hook);
 
   // cursor → world mapping across the full viewport (at the hook's z=0 plane)
